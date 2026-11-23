@@ -13,7 +13,7 @@ public class AutoFix {
             if (client.player == null || client.level == null) return;
 
             while (DarknessUtils.fixBinding.consumeClick()) {
-                client.player.connection.sendCommand("fix");
+                client.player.connection.sendCommand(DarknessUtils.CONFIG.manualFixAll ? "fix all" : "fix");
             }
 
             if (!DarknessUtils.CONFIG.autoFixEnabled) return;
