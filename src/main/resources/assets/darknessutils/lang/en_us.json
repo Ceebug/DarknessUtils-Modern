@@ -56,7 +56,7 @@
   "text.config.darkness-settings.category.cursedSolphireOptions": "<tertiary>Cursed Solphire",
   "text.config.darkness-settings.option.cursedSolphireOptions.color": "<quaternary>Mob Color",
   "text.config.darkness-settings.option.cursedSolphireOptions.isEnabled": "<quaternary>Mob Highlight",
-  "text.config.darkness-settings.category.cursedFunMummyOptions": "<tertiary>Cursed FunMummy",
+  "text.config.darkness-settings.category.cursedFunMummyOptions": "<tertiary>FunMummy",
   "text.config.darkness-settings.option.cursedFunMummyOptions.color": "<quaternary>Mob Color",
   "text.config.darkness-settings.option.cursedFunMummyOptions.isEnabled": "<quaternary>Mob Highlight",
   "text.config.darkness-settings.section.modSettings": "<secondary>Mod Settings",
@@ -102,5 +102,8 @@
   "config.darknessutils.boss.cursed_zeddy1977": "Cursed ZEDDY1977",
   "config.darknessutils.boss.cursed_crankles": "Cursed Crankles_",
   "config.darknessutils.boss.cursed_solphire": "Cursed Solphire",
-  "config.darknessutils.boss.cursed_fun_mummy": "Cursed FunMummy"
+  "config.darknessutils.boss.cursed_fun_mummy": "Cursed FunMummy",
+  "modmenu.nameTranslation.darknessutils": "DarknessUtils Modern",
+  "modmenu.summaryTranslation.darknessutils": "Client-side quality-of-life utilities for Minecraft.",
+  "modmenu.descriptionTranslation.darknessutils": "Client-side quality-of-life utilities for Minecraft, including automation, slot locking, boss highlighting, and an in-game configuration screen."
 }
