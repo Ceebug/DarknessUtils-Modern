@@ -36,7 +36,7 @@ public abstract class HandledScreenMixin {
         Minecraft client = Minecraft.getInstance();
         Slot slot = getHoveredSlot();
         if (client.player == null || slot == null || slot.container != client.player.getInventory()) return;
-        int index = slot.getSlotIndex();
+        int index = slot.index;
         if (SlotLocking.isLocked(index)) {
             SlotLocking.unlockSlot(index);
         } else if (!slot.getItem().isEmpty()) {
