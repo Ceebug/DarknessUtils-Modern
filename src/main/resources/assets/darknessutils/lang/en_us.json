@@ -112,5 +112,8 @@
   "config.darknessutils.boss.cursed_skylord_gamertag": "Cursed Skylord_Gamertag",
   "config.darknessutils.boss.tiny_terror": "Tiny Terror",
   "config.darknessutils.boss.parched_king": "Parched King",
-  "config.darknessutils.boss.frost_stray": "Frost Stray"
+  "config.darknessutils.boss.frost_stray": "Frost Stray",
+  "key.categories.darknessutils.main": "DarknessUtils",
+  "message.darknessutils.config.cloth_config_required.title": "Cloth Config is required",
+  "message.darknessutils.config.cloth_config_required.message": "Install Cloth Config to use the DarknessUtils configuration screen."
 }
