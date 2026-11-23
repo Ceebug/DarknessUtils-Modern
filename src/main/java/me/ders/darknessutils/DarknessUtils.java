@@ -2,6 +2,7 @@ package me.ders.darknessutils;
 
 import me.ders.darknessutils.config.DarknessModSettings;
 import me.ders.darknessutils.features.AutoFix;
+import me.ders.darknessutils.features.AutoFly;
 import me.ders.darknessutils.features.AutoHeal;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -21,10 +22,12 @@ public class DarknessUtils implements ModInitializer {
 
     public static AutoFix autoFix;
     public static AutoHeal autoHeal;
+    public static AutoFly autoFly;
 
     public static KeyBinding lockBinding;
     public static KeyBinding fixBinding;
     public static KeyBinding healBinding;
+    public static KeyBinding flyBinding;
 
     public static boolean isSaveDirty = false;
     private long lastDirtyCheck = System.currentTimeMillis();
@@ -35,6 +38,7 @@ public class DarknessUtils implements ModInitializer {
     public void onInitialize() {
         autoFix = AutoFix.getInstance();
         autoHeal = AutoHeal.getInstance();
+        autoFly = AutoFly.getInstance();
 
         lockBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.slotlock",
@@ -54,6 +58,13 @@ public class DarknessUtils implements ModInitializer {
                 "key.heal",
                 InputUtil.Type.KEYSYM,
                 InputUtil.GLFW_KEY_H,
+                "key.categories.gameplay"
+        ));
+
+        flyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.fly",
+                InputUtil.Type.KEYSYM,
+                InputUtil.GLFW_KEY_V,
                 "key.categories.gameplay"
         ));
 
