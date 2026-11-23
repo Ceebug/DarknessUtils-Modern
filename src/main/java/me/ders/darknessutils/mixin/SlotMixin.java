@@ -1,12 +1,11 @@
 package me.ders.darknessutils.mixin;
 
 import me.ders.darknessutils.DarknessUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,32 +16,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static me.ders.darknessutils.features.SlotLocking.isLocked;
 
 @Mixin(Slot.class)
-public class SlotMixin {
+public abstract class SlotMixin {
+    @Shadow @Final public Container container;
+    @Shadow public int index;
 
-    @Shadow @Final
-    public Inventory inventory;
-
-    @Shadow
-    @Final private int index;
-
-    @Inject(at = @At("HEAD"), method = "canInsert", cancellable = true)
-    public void canInsert(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
-        if(!MinecraftClient.getInstance().isOnThread()) return;
-
-        if(MinecraftClient.getInstance().player != null) {
-            PlayerInventory playerInventory = MinecraftClient.getInstance().player.getInventory();
-
-            if(inventory == playerInventory && isLocked(index) && DarknessUtils.CONFIG.doSlotLocking())
-                info.setReturnValue(false);
+    @Inject(method = "mayPlace", at = @At("HEAD"), cancellable = true)
+    private void darknessutils$preventPlacingIntoLockedSlot(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        Minecraft client = Minecraft.getInstance();
+        if (client.player != null
+                && container == client.player.getInventory()
+                && DarknessUtils.CONFIG.doSlotLocking()
+                && isLocked(index)) {
+            cir.setReturnValue(false);
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "canTakeItems", cancellable = true)
-    public void canTakeItems(PlayerEntity playerEntity, CallbackInfoReturnable<Boolean> info) {
-        if(!MinecraftClient.getInstance().isOnThread()) return;
-
-        if(inventory == playerEntity.getInventory() && isLocked(index) && DarknessUtils.CONFIG.doSlotLocking())
-            info.setReturnValue(false);
+    @Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
+    private void darknessutils$preventTakingFromLockedSlot(Player player, CallbackInfoReturnable<Boolean> cir) {
+        if (container == player.getInventory()
+                && DarknessUtils.CONFIG.doSlotLocking()
+                && isLocked(index)) {
+            cir.setReturnValue(false);
+        }
     }
-
 }
