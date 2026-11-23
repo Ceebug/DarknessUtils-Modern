@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = project.version
+version = "v${project.mod_version}+${project.minecraft_version}-fabric"
 group = project.group
 
 base {
@@ -60,6 +60,8 @@ java {
 }
 
 jar {
+    archiveFileName = "DarknessUtils_${project.version}.jar"
+
     from("LICENSE") {
         rename { "${it}_${project.archives_base_name}" }
     }
