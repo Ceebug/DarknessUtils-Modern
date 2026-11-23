@@ -40,6 +40,7 @@ public class DarknessModSettings {
     public BossOptions.CursedCrankles_Options cursedCranklesOptions = new BossOptions.CursedCrankles_Options();
     public BossOptions.CursedSolphireOptions cursedSolphireOptions = new BossOptions.CursedSolphireOptions();
     public BossOptions.CursedFunMummyOptions cursedFunMummyOptions = new BossOptions.CursedFunMummyOptions();
+    public BossOptions.CursedSkylordGamertagOptions cursedSkylordGamertagOptions = new BossOptions.CursedSkylordGamertagOptions();
 
     public ModColors modColors = new ModColors();
 
