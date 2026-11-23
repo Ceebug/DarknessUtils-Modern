@@ -79,7 +79,7 @@
   "config.darknessutils.option.auto_fix_threshold": "Fix when durability is at or below",
   "config.darknessutils.option.auto_fix_cooldown": "Auto-fix minimum interval",
   "config.darknessutils.option.auto_heal": "Automatically heal",
-  "config.darknessutils.option.auto_heal_threshold": "Heal when health is at or below",
+  "config.darknessutils.option.auto_heal_threshold": "Heal when health is at or below (health points)",
   "config.darknessutils.option.auto_heal_cooldown": "Auto-heal minimum interval",
   "config.darknessutils.option.auto_fly": "Automatically enable fly on join, respawn and teleport",
   "config.darknessutils.option.highlight_enabled": "Highlight this boss",
