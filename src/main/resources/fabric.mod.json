@@ -9,7 +9,8 @@
   ],
   "contact": {
     "issues": "https://github.com/Ceebug/DarknessUtils-Modern/issues",
-    "sources": "https://github.com/Ceebug/DarknessUtils-Modern"
+    "sources": "https://github.com/Ceebug/DarknessUtils-Modern",
+    "website": "https://modrinth.com/mod/darknessutils-modern"
   },
   "license": "GPL-3.0",
   "icon": "icon.png",
