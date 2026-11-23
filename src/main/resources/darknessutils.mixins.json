@@ -8,6 +8,7 @@
     "ClientPlayerEntityMixin",
     "HandledScreenMixin",
     "HandledScreenAccessor",
+    "GuiAccessor",
     "HudMixin",
     "ScreenHandlerMixin",
     "SlotMixin"
