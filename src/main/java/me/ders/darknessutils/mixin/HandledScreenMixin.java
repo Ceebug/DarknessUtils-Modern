@@ -39,7 +39,7 @@ public abstract class HandledScreenMixin {
         int index = slot.index;
         if (SlotLocking.isLocked(index)) {
             SlotLocking.unlockSlot(index);
-        } else if (!slot.getItem().isEmpty()) {
+        } else {
             SlotLocking.lockSlot(index);
         }
         cir.setReturnValue(true);
