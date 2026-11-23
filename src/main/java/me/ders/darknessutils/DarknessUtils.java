@@ -11,6 +11,7 @@ import net.fabricmc.api.ClientModInitializer;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -38,7 +39,6 @@ public class DarknessUtils implements ClientModInitializer {
 
     public static boolean isSaveDirty = false;
     private long lastDirtyCheck = System.currentTimeMillis();
-    private net.minecraft.client.multiplayer.ClientLevel lastAuditedWorld;
     public static LinkedHashSet<Integer> lockedSlots = new LinkedHashSet<>();
 
     private static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(
@@ -57,6 +57,8 @@ public class DarknessUtils implements ClientModInitializer {
         autoFly = AutoFly.getInstance();
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
+        ClientLifecycleEvents.CLIENT_STARTED.register(client ->
+                org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit());
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
             dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("duconfig")
                     .executes(context -> openConfig(context.getSource().getClient())));
@@ -65,13 +67,6 @@ public class DarknessUtils implements ClientModInitializer {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.level != lastAuditedWorld) {
-                lastAuditedWorld = client.level;
-                if (lastAuditedWorld != null) {
-                    org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit();
-                }
-            }
-
             long now = System.currentTimeMillis();
             if (now - lastDirtyCheck <= 2000) return;
 
