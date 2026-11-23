@@ -2,30 +2,31 @@
   "schemaVersion": 1,
   "id": "darknessutils",
   "version": "${version}",
-  "name": "DarknessUtils",
-  "description": "",
-  "authors": [],
+  "name": "DarknessUtils Modern",
+  "description": "A modernized continuation of DarknessUtils for Minecraft 26.3.",
+  "authors": [
+    "DersWasTaken",
+    "Ceebug"
+  ],
   "contact": {
-    "repo": "https://github.com/DersWasTaken/DarknessUtils"
+    "sources": "https://github.com/Ceebug/DarknessUtils-Modern"
   },
-  "license": "All-Rights-Reserved",
+  "license": "GPL-3.0",
   "icon": "assets/darknessutils/logo.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
-      {
-        "value": "me.ders.darknessutils.DarknessUtils"
-      }
+      "me.ders.darknessutils.DarknessUtils"
     ]
   },
   "mixins": [
     "darknessutils.mixins.json"
   ],
-  "accessWidener" : "darknessutils.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
-    "minecraft": "${minecraft_version}",
-    "cloud": "*"
+    "minecraft": "~${minecraft_version}",
+    "java": ">=25",
+    "fabric-api": "*",
+    "cloth-config": ">=26.3.159"
   }
 }
