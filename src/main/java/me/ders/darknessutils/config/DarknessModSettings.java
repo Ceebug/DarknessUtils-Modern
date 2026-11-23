@@ -21,7 +21,7 @@ public class DarknessModSettings {
     public int autoFixThresholdPercent = 50;
     public int autoFixCooldownSeconds = 3;
     public boolean autoHealEnabled = false;
-    public int autoHealThresholdPercent = 40;
+    public int autoHealThreshold = 8;
     public int autoHealCooldownSeconds = 3;
     public boolean autoFlyEnabled = false;
 
