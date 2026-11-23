@@ -74,9 +74,9 @@ public class DarknessUtils implements ClientModInitializer {
             while (lockBinding.consumeClick()) {
                 if (CONFIG.doSlotLocking()
                         && client.player != null
-                        && client.gui.screen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?>) {
+                        && ((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen() instanceof net.minecraft.((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen()s.inventory.AbstractContainerScreen<?>) {
                     me.ders.darknessutils.mixin.HandledScreenAccessor accessor =
-                            (me.ders.darknessutils.mixin.HandledScreenAccessor) client.gui.screen;
+                            (me.ders.darknessutils.mixin.HandledScreenAccessor) ((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen();
                     net.minecraft.world.inventory.Slot slot = accessor.darknessutils$getHoveredSlot();
                     if (slot != null && slot.container == client.player.getInventory()) {
                         if (SlotLocking.isLocked(slot.index)) {
@@ -145,7 +145,7 @@ public class DarknessUtils implements ClientModInitializer {
         }
 
         try {
-            client.gui.setScreen(DarknessConfigScreen.create(client.gui.screen));
+            client.gui.setScreen(DarknessConfigScreen.create(((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen()));
             System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
                     "Opened DarknessUtils configuration screen.");
         } catch (Throwable exception) {
