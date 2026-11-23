@@ -2,6 +2,7 @@ package me.ders.darknessutils.config;
 
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
+import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
@@ -29,8 +30,6 @@ public final class DarknessConfigScreen {
                 config::doSlotLocking, value -> config.doSlotLocking = value));
         general.option(boolOption("lock_sounds", config.playLockSounds,
                 config::playLockSounds, value -> config.playLockSounds = value));
-        general.option(boolOption("boss_highlights", config.showBossHighlights,
-                config::showBossHighlights, value -> config.showBossHighlights = value));
         builder.category(general.build());
 
         ConfigCategory.Builder automation = ConfigCategory.createBuilder()
@@ -51,26 +50,31 @@ public final class DarknessConfigScreen {
                 () -> config.autoFlyEnabled, value -> config.autoFlyEnabled = value));
         builder.category(automation.build());
 
-        builder.category(bossCategory("skeleton_king", config.skeletonKingOptions));
-        builder.category(bossCategory("zombie_king", config.zombieKingOptions));
-        builder.category(bossCategory("nether_king", config.netherKingOptions));
-        builder.category(bossCategory("spider_king", config.spiderKingOptions));
-        builder.category(bossCategory("dragon_slayer", config.dragonSlayerOptions));
-        builder.category(bossCategory("panda_king", config.pandaKingOptions));
-        builder.category(bossCategory("pumpkin_king", config.pumpkinKingOptions));
-        builder.category(bossCategory("ocean_prince", config.oceanPrinceOptions));
-        builder.category(bossCategory("witch_queen", config.witchQueenOptions));
-        builder.category(bossCategory("dragon_king", config.dragonKingOptions));
-        builder.category(bossCategory("super_warden", config.superWardenOptions));
-        builder.category(bossCategory("cursed_autism_father", config.cursedAFOptions));
-        builder.category(bossCategory("cursed_zeddy1977", config.cursedZEDDY1977Options));
-        builder.category(bossCategory("cursed_crankles", config.cursedCranklesOptions));
-        builder.category(bossCategory("cursed_solphire", config.cursedSolphireOptions));
-        builder.category(bossCategory("cursed_fun_mummy", config.cursedFunMummyOptions));
-        builder.category(bossCategory("cursed_skylord_gamertag", config.cursedSkylordGamertagOptions));
-        builder.category(bossCategory("tiny_terror", config.tinyTerrorOptions));
-        builder.category(bossCategory("parched_king", config.parchedKingOptions));
-        builder.category(bossCategory("frost_stray", config.frostStrayOptions));
+        ConfigCategory.Builder highlighting = ConfigCategory.createBuilder()
+                .name(Component.translatable("config.darknessutils.category.highlighting"));
+        highlighting.option(boolOption("boss_highlights", config.showBossHighlights,
+                config::showBossHighlights, value -> config.showBossHighlights = value));
+        highlighting.group(bossGroup("skeleton_king", config.skeletonKingOptions));
+        highlighting.group(bossGroup("zombie_king", config.zombieKingOptions));
+        highlighting.group(bossGroup("nether_king", config.netherKingOptions));
+        highlighting.group(bossGroup("spider_king", config.spiderKingOptions));
+        highlighting.group(bossGroup("dragon_slayer", config.dragonSlayerOptions));
+        highlighting.group(bossGroup("panda_king", config.pandaKingOptions));
+        highlighting.group(bossGroup("pumpkin_king", config.pumpkinKingOptions));
+        highlighting.group(bossGroup("ocean_prince", config.oceanPrinceOptions));
+        highlighting.group(bossGroup("witch_queen", config.witchQueenOptions));
+        highlighting.group(bossGroup("dragon_king", config.dragonKingOptions));
+        highlighting.group(bossGroup("super_warden", config.superWardenOptions));
+        highlighting.group(bossGroup("cursed_autism_father", config.cursedAFOptions));
+        highlighting.group(bossGroup("cursed_zeddy1977", config.cursedZEDDY1977Options));
+        highlighting.group(bossGroup("cursed_crankles", config.cursedCranklesOptions));
+        highlighting.group(bossGroup("cursed_solphire", config.cursedSolphireOptions));
+        highlighting.group(bossGroup("cursed_fun_mummy", config.cursedFunMummyOptions));
+        highlighting.group(bossGroup("cursed_skylord_gamertag", config.cursedSkylordGamertagOptions));
+        highlighting.group(bossGroup("tiny_terror", config.tinyTerrorOptions));
+        highlighting.group(bossGroup("parched_king", config.parchedKingOptions));
+        highlighting.group(bossGroup("frost_stray", config.frostStrayOptions));
+        builder.category(highlighting.build());
 
         ConfigCategory.Builder appearance = ConfigCategory.createBuilder()
                 .name(Component.translatable("config.darknessutils.category.appearance"));
@@ -87,14 +91,14 @@ public final class DarknessConfigScreen {
         return builder.build().generateScreen(parent);
     }
 
-    private static ConfigCategory bossCategory(String id, BossOptions.Entry options) {
-        ConfigCategory.Builder category = ConfigCategory.createBuilder()
+    private static OptionGroup bossGroup(String id, BossOptions.Entry options) {
+        OptionGroup.Builder group = OptionGroup.createBuilder()
                 .name(Component.translatable("config.darknessutils.boss." + id));
-        category.option(boolOption("highlight_enabled", true,
+        group.option(boolOption("highlight_enabled", true,
                 () -> options.isEnabled, value -> options.isEnabled = value));
-        category.option(colorOption("highlight_color", options.color,
+        group.option(colorOption("highlight_color", options.color,
                 () -> options.color, value -> options.color = value));
-        return category.build();
+        return group.build();
     }
 
     private static Option<Boolean> boolOption(String id, boolean defaultValue,
