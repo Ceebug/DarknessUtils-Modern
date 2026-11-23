@@ -44,8 +44,8 @@ public final class DarknessConfigScreen {
                 () -> config.autoFixCooldownSeconds, value -> config.autoFixCooldownSeconds = value));
         automation.option(boolOption("auto_heal", false,
                 () -> config.autoHealEnabled, value -> config.autoHealEnabled = value));
-        automation.option(sliderOption("auto_heal_threshold", 40, 1, 100,
-                () -> config.autoHealThresholdPercent, value -> config.autoHealThresholdPercent = value));
+        automation.option(sliderOption("auto_heal_threshold", 8, 1, 20,
+                () -> config.autoHealThreshold, value -> config.autoHealThreshold = value));
         automation.option(sliderOption("auto_heal_cooldown", 3, 1, 60,
                 () -> config.autoHealCooldownSeconds, value -> config.autoHealCooldownSeconds = value));
         automation.option(boolOption("auto_fly", false,
