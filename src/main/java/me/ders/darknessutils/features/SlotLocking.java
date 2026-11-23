@@ -37,6 +37,15 @@ public final class SlotLocking {
         DarknessUtils.isSaveDirty = true;
     }
 
+    public static void toggleSlot(int slot) {
+        if (!DarknessUtils.CONFIG.doSlotLocking()) return;
+        if (DarknessUtils.lockedSlots.contains(slot)) {
+            unlockSlot(slot);
+        } else {
+            lockSlot(slot);
+        }
+    }
+
     private static void playLockSound(float pitch) {
         Minecraft client = Minecraft.getInstance();
         if (DarknessUtils.CONFIG.playLockSounds() && client.player != null) {
