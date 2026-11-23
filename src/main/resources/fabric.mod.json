@@ -12,7 +12,7 @@
     "sources": "https://github.com/Ceebug/DarknessUtils-Modern"
   },
   "license": "GPL-3.0",
-  "icon": "assets/darknessutils/logo.png",
+  "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
