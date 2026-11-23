@@ -24,16 +24,20 @@ dependencies {
     implementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
 }
 
+def modVersion = project.version.toString()
+def modMinecraftVersion = project.minecraft_version.toString()
+def modLoaderVersion = project.loader_version.toString()
+
 processResources {
-    inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
+    inputs.property "version", modVersion
+    inputs.property "minecraft_version", modMinecraftVersion
+    inputs.property "loader_version", modLoaderVersion
 
     filesMatching("fabric.mod.json") {
         expand(
-            "version": project.version,
-            "minecraft_version": project.minecraft_version,
-            "loader_version": project.loader_version
+            "version": modVersion,
+            "minecraft_version": modMinecraftVersion,
+            "loader_version": modLoaderVersion
         )
     }
 }

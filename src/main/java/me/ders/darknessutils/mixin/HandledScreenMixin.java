@@ -25,7 +25,7 @@ public abstract class HandledScreenMixin {
         Minecraft client = Minecraft.getInstance();
         if (client.player == null || !DarknessUtils.CONFIG.doSlotLocking()) return;
         Inventory inventory = client.player.getInventory();
-        if (slot.container == inventory && SlotLocking.isLocked(slot.getSlotIndex())) {
+        if (slot.container == inventory && SlotLocking.isLocked(slot.index)) {
             graphics.fill(slot.x, slot.y, slot.x + 16, slot.y + 16, 0x88000000);
         }
     }

@@ -29,7 +29,7 @@ public abstract class ScreenHandlerMixin {
         }
 
         Slot slot = slots.get(slotIndex);
-        if (slot.container == player.getInventory() && isLocked(slot.getSlotIndex())) {
+        if (slot.container == player.getInventory() && isLocked(slot.index)) {
             ci.cancel();
         }
     }

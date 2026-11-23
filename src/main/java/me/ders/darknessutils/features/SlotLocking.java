@@ -40,7 +40,7 @@ public final class SlotLocking {
     private static void playLockSound(float pitch) {
         Minecraft client = Minecraft.getInstance();
         if (DarknessUtils.CONFIG.playLockSounds() && client.player != null) {
-            client.player.playSound(SoundEvents.NOTE_BLOCK_PLING, 0.5F, pitch);
+            client.player.playSound(SoundEvents.NOTE_BLOCK_PLING.value(), 0.5F, pitch);
         }
     }
 

@@ -8,7 +8,8 @@ import me.ders.darknessutils.features.AutoFly;
 import me.ders.darknessutils.features.AutoHeal;
 import me.ders.darknessutils.features.SlotLocking;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
@@ -57,9 +58,9 @@ public class DarknessUtils implements ClientModInitializer {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
-            dispatcher.register(ClientCommandManager.literal("duconfig")
+            dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("duconfig")
                     .executes(context -> openConfig(context.getSource().getClient())));
-            dispatcher.register(ClientCommandManager.literal("darknessutilsconfig")
+            dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("darknessutilsconfig")
                     .executes(context -> openConfig(context.getSource().getClient())));
         });
 
