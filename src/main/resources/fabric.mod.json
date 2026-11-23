@@ -17,6 +17,9 @@
   "entrypoints": {
     "client": [
       "me.ders.darknessutils.DarknessUtils"
+    ],
+    "modmenu": [
+      "me.ders.darknessutils.config.DarknessUtilsModMenu"
     ]
   },
   "mixins": [
@@ -29,6 +32,7 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "cloth-config": ">=26.3.159"
+    "cloth-config": ">=26.3.159",
+    "modmenu": ">=21.0.1"
   }
 }
