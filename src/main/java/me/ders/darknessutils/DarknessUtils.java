@@ -55,7 +55,10 @@ public class DarknessUtils implements ClientModInitializer {
         autoHeal = AutoHeal.getInstance();
         autoFly = AutoFly.getInstance();
 
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+            SlotLocking.handleJoinWorld();
+            org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit();
+        });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
             dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("duconfig")
