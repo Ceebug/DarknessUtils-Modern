@@ -2,12 +2,9 @@ package me.ders.darknessutils.mixin;
 
 import me.ders.darknessutils.DarknessUtils;
 import me.ders.darknessutils.features.SlotLocking;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.DebugScreenOverlay;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.components.spectator.SpectatorGui;
-import net.minecraft.client.gui.hud.Hud;
 import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,8 +22,7 @@ public abstract class HudMixin {
         int firstSlotX = graphics.guiWidth() / 2 - 90 + 2;
         int relative = x - firstSlotX;
         if (relative < 0 || relative > 8 * 20 || relative % 20 != 0) return;
-        int slot = relative / 20;
-        if (SlotLocking.isLocked(slot)) {
+        if (SlotLocking.isLocked(relative / 20)) {
             graphics.fill(x, y, x + 16, y + 16, 0x88000000);
         }
     }

@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractContainerScreen.class)
 public abstract class HandledScreenMixin {
-    @Shadow protected abstract Slot getHoveredSlot();
+    @Shadow public abstract Slot getHoveredSlot();
 
     @Inject(method = "extractSlot", at = @At("TAIL"))
     private void darknessutils$drawLockedSlotOverlay(GuiGraphicsExtractor graphics, Slot slot,
