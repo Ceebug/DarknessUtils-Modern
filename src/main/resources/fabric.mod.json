@@ -5,7 +5,6 @@
   "name": "DarknessUtils Modern",
   "description": "Client-side quality-of-life utilities for Minecraft, including automation, slot locking, boss highlighting, and an in-game configuration screen.",
   "authors": [
-    "DersWasTaken",
     "Ceebug"
   ],
   "contact": {
