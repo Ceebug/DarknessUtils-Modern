@@ -1,25 +1,18 @@
 package me.ders.darknessutils;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import me.ders.darknessutils.config.DarknessConfigScreen;
 import me.ders.darknessutils.config.DarknessModSettings;
 import me.ders.darknessutils.features.AutoFix;
 import me.ders.darknessutils.features.AutoFly;
 import me.ders.darknessutils.features.AutoHeal;
 import me.ders.darknessutils.features.SlotLocking;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.resources.Identifier;
 
 import java.nio.file.Files;
@@ -60,16 +53,6 @@ public class DarknessUtils implements ClientModInitializer {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
         ClientLifecycleEvents.CLIENT_STARTED.register(client ->
                 org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit());
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
-            System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
-                    "Registering DarknessUtils client commands");
-
-            dispatcher.register(ClientCommands.literal("duconfig")
-                    .executes(context -> openConfig(context.getSource().getClient(), context.getSource())));
-            dispatcher.register(ClientCommands.literal("darknessutilsconfig")
-                    .executes(context -> openConfig(context.getSource().getClient(), context.getSource())));
-        });
-
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (lockBinding.consumeClick()) {
                 net.minecraft.client.gui.screens.Screen currentScreen =
@@ -130,33 +113,4 @@ public class DarknessUtils implements ClientModInitializer {
         ));
     }
 
-    private static int openConfig(Minecraft client, FabricClientCommandSource source) {
-        LinkedHashSet<String> missingMods = new LinkedHashSet<>();
-        if (!FabricLoader.getInstance().isModLoaded("yet_another_config_lib_v3")) {
-            missingMods.add("YetAnotherConfigLib (YACL)");
-        }
-
-        if (!missingMods.isEmpty()) {
-            String missingModNames = String.join(" and ", missingMods);
-            String translationKey = missingMods.size() == 1
-                    ? "message.darknessutils.config.missing_mod.one"
-                    : "message.darknessutils.config.missing_mod.many";
-            source.sendError(Component.translatable(translationKey, missingModNames)
-                    .withStyle(ChatFormatting.RED));
-            return 0;
-        }
-
-        try {
-            client.gui.setScreen(DarknessConfigScreen.create(((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen()));
-            System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
-                    "Opened DarknessUtils configuration screen.");
-        } catch (Throwable exception) {
-            System.getLogger("DarknessUtils").log(System.Logger.Level.ERROR,
-                    "Failed to create or open the DarknessUtils configuration screen.", exception);
-            source.sendError(Component.translatable("message.darknessutils.config.open_failed")
-                    .withStyle(ChatFormatting.RED));
-            return 0;
-        }
-        return 1;
-    }
 }
