@@ -40,7 +40,7 @@ public abstract class GlowingMixin {
         DARKNESSUTILS_BOSS_COLORS.put("Cursed FunMummy", () -> DarknessUtils.CONFIG.cursedFunMummyOptions);
     }
 
-    @Inject(method = "isGlowing", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isCurrentlyGlowing", at = @At("HEAD"), cancellable = true)
     private void darknessutils$enableNamedBossGlow(CallbackInfoReturnable<Boolean> cir) {
         if (!DarknessUtils.CONFIG.showBossHighlights() || !hasCustomName()) return;
         Optional<BossOptions.Entry> match = getBossOptions();
