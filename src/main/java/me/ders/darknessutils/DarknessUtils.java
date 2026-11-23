@@ -54,25 +54,6 @@ public class DarknessUtils implements ClientModInitializer {
         ClientLifecycleEvents.CLIENT_STARTED.register(client ->
                 org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit());
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (lockBinding.consumeClick()) {
-                net.minecraft.client.gui.screens.Screen currentScreen =
-                        ((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen();
-                if (CONFIG.doSlotLocking()
-                        && client.player != null
-                        && currentScreen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?>) {
-                    me.ders.darknessutils.mixin.HandledScreenAccessor accessor =
-                            (me.ders.darknessutils.mixin.HandledScreenAccessor) currentScreen;
-                    net.minecraft.world.inventory.Slot slot = accessor.darknessutils$getHoveredSlot();
-                    if (slot != null && slot.container == client.player.getInventory()) {
-                        if (SlotLocking.isLocked(slot.index)) {
-                            SlotLocking.unlockSlot(slot.index);
-                        } else {
-                            SlotLocking.lockSlot(slot.index);
-                        }
-                    }
-                }
-            }
-
             long now = System.currentTimeMillis();
             if (now - lastDirtyCheck <= 2000) return;
 
