@@ -33,7 +33,7 @@ jobs:
       - name: Upload mod JAR
         uses: actions/upload-artifact@v4
         with:
-          name: DarknessUtils-${{ github.ref_name }}-MC26.3
+          name: DarknessUtils-MC26.3
           path: |
             build/libs/*.jar
             !build/libs/*-sources.jar
