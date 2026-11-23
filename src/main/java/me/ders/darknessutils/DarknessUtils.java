@@ -1,102 +1,107 @@
 package me.ders.darknessutils;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import me.ders.darknessutils.config.DarknessConfigScreen;
 import me.ders.darknessutils.config.DarknessModSettings;
 import me.ders.darknessutils.features.AutoFix;
 import me.ders.darknessutils.features.AutoFly;
 import me.ders.darknessutils.features.AutoHeal;
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedHashSet;
 
-public class DarknessUtils implements ModInitializer {
+public class DarknessUtils implements ClientModInitializer {
     public static final DarknessModSettings CONFIG = DarknessModSettings.createAndLoad();
 
     public static AutoFix autoFix;
     public static AutoHeal autoHeal;
     public static AutoFly autoFly;
 
-    public static KeyBinding lockBinding;
-    public static KeyBinding fixBinding;
-    public static KeyBinding healBinding;
-    public static KeyBinding flyBinding;
+    public static KeyMapping lockBinding;
+    public static KeyMapping fixBinding;
+    public static KeyMapping healBinding;
+    public static KeyMapping flyBinding;
 
     public static boolean isSaveDirty = false;
     private long lastDirtyCheck = System.currentTimeMillis();
-
     public static LinkedHashSet<Integer> lockedSlots = new LinkedHashSet<>();
 
+    private static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(
+            Identifier.fromNamespaceAndPath("darknessutils", "main")
+    );
+
     @Override
-    public void onInitialize() {
+    public void onInitializeClient() {
+        lockBinding = registerKey("key.slotlock", InputConstants.KEY_LEFT_ALT);
+        fixBinding = registerKey("key.fix", InputConstants.KEY_F);
+        healBinding = registerKey("key.heal", InputConstants.KEY_H);
+        flyBinding = registerKey("key.fly", InputConstants.KEY_V);
+
         autoFix = AutoFix.getInstance();
         autoHeal = AutoHeal.getInstance();
         autoFly = AutoFly.getInstance();
 
-        lockBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.slotlock",
-                InputUtil.Type.KEYSYM,
-                InputUtil.GLFW_KEY_LEFT_ALT,
-                "key.categories.inventory"
-        ));
-
-        fixBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.fix",
-                InputUtil.Type.KEYSYM,
-                InputUtil.GLFW_KEY_F,
-                "key.categories.gameplay"
-        ));
-
-        healBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.heal",
-                InputUtil.Type.KEYSYM,
-                InputUtil.GLFW_KEY_H,
-                "key.categories.gameplay"
-        ));
-
-        flyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.fly",
-                InputUtil.Type.KEYSYM,
-                InputUtil.GLFW_KEY_V,
-                "key.categories.gameplay"
-        ));
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
+            dispatcher.register(ClientCommandManager.literal("duconfig")
+                    .executes(context -> openConfig(context.getSource().getClient())));
+            dispatcher.register(ClientCommandManager.literal("darknessutilsconfig")
+                    .executes(context -> openConfig(context.getSource().getClient())));
+        });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            long currentDirtyCheck = System.currentTimeMillis();
-            if (currentDirtyCheck - lastDirtyCheck > 2000) {
-                if (isSaveDirty) {
-                    File slotLockFile = new File(MinecraftClient.getInstance().runDirectory, "slotlock.json");
-                    Path slotLockPath = Paths.get(slotLockFile.getAbsolutePath());
-                    String json = "{ }";
-                    try {
-                        json = Files.readString(slotLockPath);
-                    } catch (Exception ignored) {
-                    }
+            long now = System.currentTimeMillis();
+            if (now - lastDirtyCheck <= 2000) return;
 
-                    com.google.gson.JsonObject jsonObject =
-                            new com.google.gson.Gson().fromJson(json, com.google.gson.JsonObject.class);
-                    if (jsonObject == null) jsonObject = new com.google.gson.JsonObject();
-                    com.google.gson.JsonArray jsonArray = new com.google.gson.JsonArray();
-                    lockedSlots.forEach(jsonArray::add);
-                    jsonObject.add("lockedSlots", jsonArray);
-
-                    try {
-                        Files.writeString(slotLockPath, jsonObject.toString());
-                    } catch (Exception e) {
-                        System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
-                                "Failed to update slotlock file", e);
-                    }
-                    isSaveDirty = false;
+            if (isSaveDirty) {
+                Path slotLockPath = FabricLoader.getInstance().getGameDir().resolve("slotlock.json");
+                String json = "{ }";
+                try {
+                    if (Files.exists(slotLockPath)) json = Files.readString(slotLockPath);
+                } catch (Exception ignored) {
                 }
-                lastDirtyCheck = currentDirtyCheck;
+
+                com.google.gson.JsonObject jsonObject =
+                        new com.google.gson.Gson().fromJson(json, com.google.gson.JsonObject.class);
+                if (jsonObject == null) jsonObject = new com.google.gson.JsonObject();
+                com.google.gson.JsonArray jsonArray = new com.google.gson.JsonArray();
+                lockedSlots.forEach(jsonArray::add);
+                jsonObject.add("lockedSlots", jsonArray);
+
+                try {
+                    Files.writeString(slotLockPath, jsonObject.toString());
+                } catch (Exception exception) {
+                    System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
+                            "Failed to update slotlock file", exception);
+                }
+                isSaveDirty = false;
             }
+
+            lastDirtyCheck = now;
         });
+    }
+
+    private static KeyMapping registerKey(String translationKey, int defaultKey) {
+        return KeyMappingHelper.registerKeyMapping(new KeyMapping(
+                translationKey,
+                InputConstants.Type.KEYBOARD,
+                defaultKey,
+                KEY_CATEGORY
+        ));
+    }
+
+    private static int openConfig(Minecraft client) {
+        client.setScreen(DarknessConfigScreen.create(client.screen));
+        return 1;
     }
 }

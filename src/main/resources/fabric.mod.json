@@ -15,11 +15,8 @@
   "icon": "assets/darknessutils/logo.png",
   "environment": "client",
   "entrypoints": {
-    "main": [
-      "me.ders.darknessutils.DarknessUtils"
-    ],
     "client": [
-      "me.ders.darknessutils.DarknessUtilsClient"
+      "me.ders.darknessutils.DarknessUtils"
     ]
   },
   "mixins": [

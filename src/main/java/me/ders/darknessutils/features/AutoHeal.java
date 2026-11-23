@@ -9,10 +9,10 @@ public class AutoHeal {
 
     private AutoHeal() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.player == null || client.world == null) return;
+            if (client.player == null || client.level == null) return;
 
-            while (DarknessUtils.healBinding.wasPressed()) {
-                client.player.networkHandler.sendChatCommand("heal");
+            while (DarknessUtils.healBinding.consumeClick()) {
+                client.player.connection.sendCommand("heal");
             }
 
             if (!DarknessUtils.CONFIG.autoHealEnabled) return;
@@ -21,7 +21,7 @@ public class AutoHeal {
 
             double healthPercent = client.player.getHealth() / client.player.getMaxHealth() * 100.0;
             if (healthPercent <= DarknessUtils.CONFIG.autoHealThresholdPercent) {
-                client.player.networkHandler.sendChatCommand("heal");
+                client.player.connection.sendCommand("heal");
                 lastAutomaticHealAt = System.currentTimeMillis();
             }
         });

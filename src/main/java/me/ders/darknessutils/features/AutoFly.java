@@ -2,14 +2,14 @@ package me.ders.darknessutils.features;
 
 import me.ders.darknessutils.DarknessUtils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 
 public class AutoFly {
     private static AutoFly instance;
 
-    private ClientPlayerEntity previousPlayer;
-    private ClientWorld previousWorld;
+    private LocalPlayer previousPlayer;
+    private ClientLevel previousLevel;
     private double previousX;
     private double previousY;
     private double previousZ;
@@ -18,22 +18,22 @@ public class AutoFly {
 
     private AutoFly() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.player == null || client.world == null) {
+            if (client.player == null || client.level == null) {
                 previousPlayer = null;
-                previousWorld = null;
+                previousLevel = null;
                 hasPreviousPosition = false;
                 return;
             }
 
-            while (DarknessUtils.flyBinding.wasPressed()) {
-                client.player.networkHandler.sendChatCommand("fly");
+            while (DarknessUtils.flyBinding.consumeClick()) {
+                client.player.connection.sendCommand("fly");
             }
 
             double x = client.player.getX();
             double y = client.player.getY();
             double z = client.player.getZ();
 
-            boolean joinedOrRespawned = client.player != previousPlayer || client.world != previousWorld;
+            boolean joinedOrRespawned = client.player != previousPlayer || client.level != previousLevel;
             double dx = x - previousX;
             double dy = y - previousY;
             double dz = z - previousZ;
@@ -41,12 +41,12 @@ public class AutoFly {
 
             if (DarknessUtils.CONFIG.autoFlyEnabled && (joinedOrRespawned || teleported)
                     && System.currentTimeMillis() - lastAutomaticFlyAt >= 1000L) {
-                client.player.networkHandler.sendChatCommand("fly enable");
+                client.player.connection.sendCommand("fly enable");
                 lastAutomaticFlyAt = System.currentTimeMillis();
             }
 
             previousPlayer = client.player;
-            previousWorld = client.world;
+            previousLevel = client.level;
             previousX = x;
             previousY = y;
             previousZ = z;
