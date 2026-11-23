@@ -56,6 +56,7 @@ public final class DarknessConfigScreen {
         addBoss(entries, builder, "cursed_crankles", config.cursedCranklesOptions);
         addBoss(entries, builder, "cursed_solphire", config.cursedSolphireOptions);
         addBoss(entries, builder, "cursed_fun_mummy", config.cursedFunMummyOptions);
+        addBoss(entries, builder, "cursed_skylord_gamertag", config.cursedSkylordGamertagOptions);
 
         ConfigCategory appearance = builder.getOrCreateCategory(Component.translatable("config.darknessutils.category.appearance"));
         appearance.addEntry(entries.startColorField(label("primary_color"), config.modColors.primary)
