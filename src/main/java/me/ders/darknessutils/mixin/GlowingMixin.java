@@ -39,6 +39,9 @@ public abstract class GlowingMixin {
         DARKNESSUTILS_BOSS_COLORS.put("Cursed Solphire", () -> DarknessUtils.CONFIG.cursedSolphireOptions);
         DARKNESSUTILS_BOSS_COLORS.put("Cursed FunMummy", () -> DarknessUtils.CONFIG.cursedFunMummyOptions);
         DARKNESSUTILS_BOSS_COLORS.put("Cursed Skylord_Gamertag", () -> DarknessUtils.CONFIG.cursedSkylordGamertagOptions);
+        DARKNESSUTILS_BOSS_COLORS.put("Tiny Terror", () -> DarknessUtils.CONFIG.tinyTerrorOptions);
+        DARKNESSUTILS_BOSS_COLORS.put("Parched King", () -> DarknessUtils.CONFIG.parchedKingOptions);
+        DARKNESSUTILS_BOSS_COLORS.put("Frost Stray", () -> DarknessUtils.CONFIG.frostStrayOptions);
     }
 
     @Inject(method = "isCurrentlyGlowing", at = @At("HEAD"), cancellable = true)
