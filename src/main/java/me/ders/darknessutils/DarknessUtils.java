@@ -9,6 +9,7 @@ import me.ders.darknessutils.features.AutoHeal;
 import me.ders.darknessutils.features.SlotLocking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -110,7 +111,7 @@ public class DarknessUtils implements ClientModInitializer {
         ));
     }
 
-    private static int openConfig(Minecraft client, net.minecraft.commands.CommandSourceStack source) {
+    private static int openConfig(Minecraft client, FabricClientCommandSource source) {
         LinkedHashSet<String> missingMods = new LinkedHashSet<>();
         if (!FabricLoader.getInstance().isModLoaded("cloth-config")) {
             missingMods.add("Cloth Config");
@@ -124,7 +125,7 @@ public class DarknessUtils implements ClientModInitializer {
             String translationKey = missingMods.size() == 1
                     ? "message.darknessutils.config.missing_mod.one"
                     : "message.darknessutils.config.missing_mod.many";
-            source.sendFailure(Component.translatable(translationKey, missingModNames)
+            source.sendError(Component.translatable(translationKey, missingModNames)
                     .withStyle(ChatFormatting.RED));
             return 0;
         }
