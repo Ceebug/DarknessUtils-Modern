@@ -9,7 +9,6 @@
     "KeyBindingAccessor",
     "ServerWorldAccessor",
     "SlotAccessor",
-    "TranslatableTextContentMixin",
     "ClientPlayerEntityMixin",
     "CreativeInventoryScreenMixin",
     "HandledScreenMixin",

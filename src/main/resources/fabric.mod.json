@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "me.ders.darknessutils.DarknessUtils"
+    ],
+    "client": [
+      "me.ders.darknessutils.DarknessUtilsClient"
     ]
   },
   "mixins": [
