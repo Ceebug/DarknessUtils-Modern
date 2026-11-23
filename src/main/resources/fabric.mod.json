@@ -9,6 +9,7 @@
     "Ceebug"
   ],
   "contact": {
+    "issues": "https://github.com/Ceebug/DarknessUtils-Modern/issues",
     "sources": "https://github.com/Ceebug/DarknessUtils-Modern"
   },
   "license": "GPL-3.0",
