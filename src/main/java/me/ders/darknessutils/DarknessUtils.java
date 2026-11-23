@@ -116,9 +116,6 @@ public class DarknessUtils implements ClientModInitializer {
         if (!FabricLoader.getInstance().isModLoaded("cloth-config")) {
             missingMods.add("Cloth Config");
         }
-        if (!FabricLoader.getInstance().isModLoaded("modmenu")) {
-            missingMods.add("Mod Menu");
-        }
 
         if (!missingMods.isEmpty()) {
             String missingModNames = String.join(" and ", missingMods);
