@@ -105,5 +105,8 @@
   "config.darknessutils.boss.cursed_fun_mummy": "Cursed FunMummy",
   "modmenu.nameTranslation.darknessutils": "DarknessUtils Modern",
   "modmenu.summaryTranslation.darknessutils": "Client-side quality-of-life utilities for Minecraft.",
-  "modmenu.descriptionTranslation.darknessutils": "Client-side quality-of-life utilities for Minecraft, including automation, slot locking, boss highlighting, and an in-game configuration screen."
+  "modmenu.descriptionTranslation.darknessutils": "Client-side quality-of-life utilities for Minecraft, including automation, slot locking, boss highlighting, and an in-game configuration screen.",
+  "message.darknessutils.config.missing_mod.one": "Could not open the config menu because the required mod is not installed: %s.",
+  "message.darknessutils.config.missing_mod.many": "Could not open the config menu because the required mods are not installed: %s.",
+  "message.darknessutils.config.open_failed": "Could not open the DarknessUtils config menu. See latest.log for details."
 }
