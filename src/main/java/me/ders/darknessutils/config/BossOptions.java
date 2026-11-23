@@ -27,4 +27,5 @@ public final class BossOptions {
     public static class CursedCrankles_Options extends Entry { public CursedCrankles_Options() { super(0xFF0014); } }
     public static class CursedSolphireOptions extends Entry { public CursedSolphireOptions() { super(0xFF0014); } }
     public static class CursedFunMummyOptions extends Entry { public CursedFunMummyOptions() { super(0xFF0014); } }
+    public static class CursedSkylordGamertagOptions extends Entry { public CursedSkylordGamertagOptions() { super(0xFF0014); } }
 }
