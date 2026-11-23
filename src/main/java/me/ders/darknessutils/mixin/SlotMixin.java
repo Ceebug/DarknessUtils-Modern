@@ -18,7 +18,7 @@ import static me.ders.darknessutils.features.SlotLocking.isLocked;
 @Mixin(Slot.class)
 public abstract class SlotMixin {
     @Shadow @Final public Container container;
-    @Shadow public int index;
+    @Shadow public abstract int getContainerSlot();
 
     @Inject(method = "mayPlace", at = @At("HEAD"), cancellable = true)
     private void darknessutils$preventPlacingIntoLockedSlot(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
@@ -26,7 +26,7 @@ public abstract class SlotMixin {
         if (client.player != null
                 && container == client.player.getInventory()
                 && DarknessUtils.CONFIG.doSlotLocking()
-                && isLocked(index)) {
+                && isLocked(getContainerSlot())) {
             cir.setReturnValue(false);
         }
     }
@@ -35,7 +35,7 @@ public abstract class SlotMixin {
     private void darknessutils$preventTakingFromLockedSlot(Player player, CallbackInfoReturnable<Boolean> cir) {
         if (container == player.getInventory()
                 && DarknessUtils.CONFIG.doSlotLocking()
-                && isLocked(index)) {
+                && isLocked(getContainerSlot())) {
             cir.setReturnValue(false);
         }
     }
@@ -44,7 +44,7 @@ public abstract class SlotMixin {
     private void darknessutils$preventModifyingLockedSlot(Player player, CallbackInfoReturnable<Boolean> cir) {
         if (container == player.getInventory()
                 && DarknessUtils.CONFIG.doSlotLocking()
-                && isLocked(index)) {
+                && isLocked(getContainerSlot())) {
             cir.setReturnValue(false);
         }
     }
