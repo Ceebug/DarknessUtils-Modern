@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractContainerScreen.class)
 public abstract class HandledScreenMixin {
-    @Shadow public abstract Slot getHoveredSlot();
+    @Shadow protected Slot hoveredSlot;
 
     @Inject(method = "extractSlot", at = @At("TAIL"))
     private void darknessutils$drawLockedSlotOverlay(GuiGraphicsExtractor graphics, Slot slot,
@@ -34,7 +34,7 @@ public abstract class HandledScreenMixin {
     private void darknessutils$toggleHoveredSlotLock(KeyEvent event, CallbackInfoReturnable<Boolean> cir) {
         if (!DarknessUtils.CONFIG.doSlotLocking() || !DarknessUtils.lockBinding.matches(event)) return;
         Minecraft client = Minecraft.getInstance();
-        Slot slot = getHoveredSlot();
+        Slot slot = hoveredSlot;
         if (client.player == null || slot == null || slot.container != client.player.getInventory()) return;
         int index = slot.index;
         if (SlotLocking.isLocked(index)) {
