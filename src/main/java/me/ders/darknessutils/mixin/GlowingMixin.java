@@ -38,6 +38,7 @@ public abstract class GlowingMixin {
         DARKNESSUTILS_BOSS_COLORS.put("Cursed Crankles_", () -> DarknessUtils.CONFIG.cursedCranklesOptions);
         DARKNESSUTILS_BOSS_COLORS.put("Cursed Solphire", () -> DarknessUtils.CONFIG.cursedSolphireOptions);
         DARKNESSUTILS_BOSS_COLORS.put("Cursed FunMummy", () -> DarknessUtils.CONFIG.cursedFunMummyOptions);
+        DARKNESSUTILS_BOSS_COLORS.put("Cursed Skylord_Gamertag", () -> DarknessUtils.CONFIG.cursedSkylordGamertagOptions);
     }
 
     @Inject(method = "isCurrentlyGlowing", at = @At("HEAD"), cancellable = true)
