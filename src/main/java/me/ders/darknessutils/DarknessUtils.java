@@ -8,9 +8,8 @@ import me.ders.darknessutils.features.AutoFly;
 import me.ders.darknessutils.features.AutoHeal;
 import me.ders.darknessutils.features.SlotLocking;
 import net.fabricmc.api.ClientModInitializer;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
@@ -60,10 +59,19 @@ public class DarknessUtils implements ClientModInitializer {
         ClientLifecycleEvents.CLIENT_STARTED.register(client ->
                 org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit());
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
-            dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("duconfig")
-                    .executes(context -> openConfig(context.getSource().getClient())));
-            dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("darknessutilsconfig")
-                    .executes(context -> openConfig(context.getSource().getClient())));
+            System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
+                    "Registering DarknessUtils client commands");
+
+            dispatcher.register(ClientCommands.literal("duconfig")
+                    .executes(context -> {
+                        context.getSource().sendFeedback(Component.literal("Opening DarknessUtils config..."));
+                        return openConfig(context.getSource().getClient());
+                    }));
+            dispatcher.register(ClientCommands.literal("darknessutilsconfig")
+                    .executes(context -> {
+                        context.getSource().sendFeedback(Component.literal("Opening DarknessUtils config..."));
+                        return openConfig(context.getSource().getClient());
+                    }));
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
