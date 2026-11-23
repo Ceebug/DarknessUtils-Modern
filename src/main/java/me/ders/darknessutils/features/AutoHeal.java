@@ -19,8 +19,7 @@ public class AutoHeal {
             if (System.currentTimeMillis() - lastAutomaticHealAt
                     < DarknessUtils.CONFIG.autoHealCooldownSeconds * 1000L) return;
 
-            double healthPercent = client.player.getHealth() / client.player.getMaxHealth() * 100.0;
-            if (healthPercent <= DarknessUtils.CONFIG.autoHealThresholdPercent) {
+            if (client.player.getHealth() <= DarknessUtils.CONFIG.autoHealThreshold) {
                 client.player.connection.sendCommand("heal");
                 lastAutomaticHealAt = System.currentTimeMillis();
             }
