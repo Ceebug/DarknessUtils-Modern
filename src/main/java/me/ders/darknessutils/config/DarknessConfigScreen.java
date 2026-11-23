@@ -30,6 +30,8 @@ public final class DarknessConfigScreen {
                 config::doSlotLocking, value -> config.doSlotLocking = value));
         general.option(boolOption("lock_sounds", config.playLockSounds,
                 config::playLockSounds, value -> config.playLockSounds = value));
+        general.option(boolOption("manual_fix_all", config.manualFixAll,
+                () -> config.manualFixAll, value -> config.manualFixAll = value));
         builder.category(general.build());
 
         ConfigCategory.Builder automation = ConfigCategory.createBuilder()
