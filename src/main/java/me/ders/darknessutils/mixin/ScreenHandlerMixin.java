@@ -1,13 +1,11 @@
 package me.ders.darknessutils.mixin;
 
 import me.ders.darknessutils.DarknessUtils;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,27 +15,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static me.ders.darknessutils.features.SlotLocking.isLocked;
 
-@Mixin(ScreenHandler.class)
-public class ScreenHandlerMixin {
+@Mixin(AbstractContainerMenu.class)
+public abstract class ScreenHandlerMixin {
+    @Shadow @Final public NonNullList<Slot> slots;
 
-    @Shadow
-    @Final
-    public DefaultedList<Slot> slots;
+    @Inject(method = "clicked", at = @At("HEAD"), cancellable = true)
+    private void darknessutils$blockLockedSlotClick(int slotIndex, int buttonNum, ContainerInput input,
+                                                    Player player, CallbackInfo ci) {
+        if (!DarknessUtils.CONFIG.doSlotLocking()
+                || slotIndex < 0
+                || slotIndex >= slots.size()) {
+            return;
+        }
 
-    @Inject(at = @At("HEAD"), method = "onSlotClick", cancellable = true)
-    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player, CallbackInfo info) {
-        if(!MinecraftClient.getInstance().isOnThread()) return;
-
-        if(slotIndex >= 0 && slotIndex < this.slots.size()) {
-            Slot finalSlot = this.slots.get(slotIndex);
-
-            if(finalSlot instanceof CreativeInventoryScreen.CreativeSlot)
-                finalSlot = ((CreativeSlotAccessor) finalSlot).getSlot();
-
-            if (finalSlot.inventory == player.getInventory() && isLocked(((SlotAccessor) finalSlot).getIndex()) && DarknessUtils.CONFIG.doSlotLocking())
-                info.cancel();
+        Slot slot = slots.get(slotIndex);
+        if (slot.container == player.getInventory() && isLocked(slot.getSlotIndex())) {
+            ci.cancel();
         }
     }
-
-
 }
