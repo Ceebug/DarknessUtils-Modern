@@ -72,11 +72,13 @@ public class DarknessUtils implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (lockBinding.consumeClick()) {
+                net.minecraft.client.gui.screens.Screen currentScreen =
+                        ((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen();
                 if (CONFIG.doSlotLocking()
                         && client.player != null
-                        && ((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen() instanceof net.minecraft.((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen()s.inventory.AbstractContainerScreen<?>) {
+                        && currentScreen instanceof net.minecraft.client.gui.screens.inventory.AbstractContainerScreen<?>) {
                     me.ders.darknessutils.mixin.HandledScreenAccessor accessor =
-                            (me.ders.darknessutils.mixin.HandledScreenAccessor) ((me.ders.darknessutils.mixin.GuiAccessor) client.gui).darknessutils$getScreen();
+                            (me.ders.darknessutils.mixin.HandledScreenAccessor) currentScreen;
                     net.minecraft.world.inventory.Slot slot = accessor.darknessutils$getHoveredSlot();
                     if (slot != null && slot.container == client.player.getInventory()) {
                         if (SlotLocking.isLocked(slot.index)) {
