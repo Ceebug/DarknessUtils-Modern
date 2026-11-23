@@ -29,3 +29,14 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build
+
+      - name: Upload mod JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: DarknessUtils-${{ github.ref_name }}-MC26.3
+          path: |
+            build/libs/*.jar
+            !build/libs/*-sources.jar
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 14
