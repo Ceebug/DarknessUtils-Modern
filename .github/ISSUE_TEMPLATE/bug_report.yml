@@ -1,0 +1,81 @@
+name: "🐛 Bug Report"
+description: "Report a bug in DarknessUtils Modern."
+title: ""
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a DarknessUtils Modern bug!
+
+        Please search existing issues before submitting a duplicate. For crashes or startup problems, attach your latest.log or crash report if possible.
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: DarknessUtils Modern Version
+      description: The version shown in your mods list or mod file name.
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: minecraft-version
+    attributes:
+      label: Minecraft Version
+      placeholder: e.g. 26.3
+    validations:
+      required: true
+
+  - type: input
+    id: fabric-loader-version
+    attributes:
+      label: Fabric Loader Version
+      placeholder: e.g. 0.18.2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: bug-type
+    attributes:
+      label: Bug Type
+      options:
+        - Crash / Startup Failure
+        - Automation (Auto Fix, Auto Heal, Auto Fly)
+        - Slot Locking
+        - Boss Highlighting
+        - Configuration / Commands
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you observed.
+      placeholder: Tell us what went wrong...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: List the steps needed to make the issue happen.
+      placeholder: |
+        1. Join a world or server...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Crash Report
+      description: If relevant, attach your latest.log or crash report. Please include the full error rather than only a screenshot.
+      placeholder: Paste relevant logs here, or attach the file.
+    validations:
+      required: false

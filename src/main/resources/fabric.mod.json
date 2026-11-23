@@ -2,30 +2,38 @@
   "schemaVersion": 1,
   "id": "darknessutils",
   "version": "${version}",
-  "name": "DarknessUtils",
-  "description": "",
-  "authors": [],
+  "name": "DarknessUtils Modern",
+  "description": "Client-side quality-of-life utilities for Minecraft, including automation, slot locking, boss highlighting, and an in-game configuration screen.",
+  "authors": [
+    "Ceebug"
+  ],
   "contact": {
-    "repo": "https://github.com/DersWasTaken/DarknessUtils"
+    "issues": "https://github.com/Ceebug/DarknessUtils-Modern/issues",
+    "sources": "https://github.com/Ceebug/DarknessUtils-Modern",
+    "website": "https://modrinth.com/mod/darknessutils-modern"
   },
-  "license": "All-Rights-Reserved",
-  "icon": "assets/darknessutils/logo.png",
-  "environment": "*",
+  "license": "GPL-3.0",
+  "icon": "icon.png",
+  "environment": "client",
   "entrypoints": {
-    "main": [
-      {
-        "value": "me.ders.darknessutils.DarknessUtils"
-      }
+    "client": [
+      "me.ders.darknessutils.DarknessUtils"
+    ],
+    "modmenu": [
+      "me.ders.darknessutils.config.DarknessUtilsModMenu"
     ]
   },
   "mixins": [
     "darknessutils.mixins.json"
   ],
-  "accessWidener" : "darknessutils.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
-    "minecraft": "${minecraft_version}",
-    "cloud": "*"
+    "minecraft": "~${minecraft_version}",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "yet_another_config_lib_v3": ">=3.9.7",
+    "modmenu": ">=21.0.1"
   }
 }

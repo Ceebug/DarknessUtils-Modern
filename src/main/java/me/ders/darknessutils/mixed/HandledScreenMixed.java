@@ -1,9 +1,4 @@
 package me.ders.darknessutils.mixed;
 
-import net.minecraft.entity.player.PlayerInventory;
-
-public interface HandledScreenMixed {
-
-    PlayerInventory slotlock$getPlayerInventory();
-
-}
+/** Legacy interface removed during the 26.3 port. */
+public interface HandledScreenMixed {}
