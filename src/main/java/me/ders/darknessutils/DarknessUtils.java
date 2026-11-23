@@ -6,11 +6,13 @@ import me.ders.darknessutils.config.DarknessModSettings;
 import me.ders.darknessutils.features.AutoFix;
 import me.ders.darknessutils.features.AutoFly;
 import me.ders.darknessutils.features.AutoHeal;
+import me.ders.darknessutils.features.SlotLocking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -51,6 +53,8 @@ public class DarknessUtils implements ClientModInitializer {
         autoFix = AutoFix.getInstance();
         autoHeal = AutoHeal.getInstance();
         autoFly = AutoFly.getInstance();
+
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
             dispatcher.register(ClientCommandManager.literal("duconfig")
@@ -101,7 +105,7 @@ public class DarknessUtils implements ClientModInitializer {
     }
 
     private static int openConfig(Minecraft client) {
-        client.setScreen(DarknessConfigScreen.create(client.screen));
+        client.gui.setScreen(DarknessConfigScreen.create(client.gui.screen()));
         return 1;
     }
 }
