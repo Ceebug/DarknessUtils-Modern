@@ -25,9 +25,9 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-    // Optional integrations are available in the development runtime but are not bundled.
-    modImplementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    // Optional APIs are compile-time only; neither mod is bundled or required at runtime.
+    compileOnly "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
+    compileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 def modVersion = project.version.toString()
