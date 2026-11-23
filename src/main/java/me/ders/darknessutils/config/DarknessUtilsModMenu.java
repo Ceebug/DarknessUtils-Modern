@@ -13,14 +13,14 @@ import net.minecraft.network.chat.Component;
 public final class DarknessUtilsModMenu implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        // Always register a config button. If Cloth Config is missing, explain the dependency
+        // Always register a config button. If YACL is missing, explain the dependency
         // instead of returning null (which makes Mod Menu hide the button entirely).
         return parent -> {
-            if (!FabricLoader.getInstance().isModLoaded("cloth-config")) {
+            if (!FabricLoader.getInstance().isModLoaded("yet_another_config_lib_v3")) {
                 return new ConfirmScreen(
                         accepted -> Minecraft.getInstance().gui.setScreen(parent),
-                        Component.translatable("message.darknessutils.config.cloth_config_required.title"),
-                        Component.translatable("message.darknessutils.config.cloth_config_required.message")
+                        Component.translatable("message.darknessutils.config.yacl_required.title"),
+                        Component.translatable("message.darknessutils.config.yacl_required.message")
                 );
             }
             return DarknessConfigScreen.create(parent);
