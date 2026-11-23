@@ -14,6 +14,7 @@ public class DarknessModSettings {
 
     public boolean doSlotLocking = true;
     public boolean playLockSounds = true;
+    public boolean manualFixAll = true;
     public boolean showBossHighlights = true;
 
     public boolean autoFixEnabled = false;
