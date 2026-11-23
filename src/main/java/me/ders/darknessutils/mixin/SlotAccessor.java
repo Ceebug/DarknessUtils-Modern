@@ -1,11 +1,4 @@
 package me.ders.darknessutils.mixin;
 
-import net.minecraft.screen.slot.Slot;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
-
-@Mixin(Slot.class)
-public interface SlotAccessor {
-    @Accessor
-    int getIndex();
-}
+/** Slot exposes getSlotIndex() directly in 26.3. */
+public interface SlotAccessor {}

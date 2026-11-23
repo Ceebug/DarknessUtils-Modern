@@ -1,23 +1,19 @@
 package me.ders.darknessutils.mixin;
 
-import com.mojang.authlib.GameProfile;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
+import me.ders.darknessutils.features.SlotLocking;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
-
-    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-        super(world, profile);
-    }
-
-    @Inject(at = @At("HEAD"), method = "dropSelectedItem", cancellable = true)
-    public void dropSelectedItem(boolean dropEntireStack, CallbackInfoReturnable<Boolean> info) {
-        me.ders.darknessutils.features.SlotLocking.handleDropSelectedItem(this.getInventory(), info);
+@Mixin(MultiPlayerGameMode.class)
+public abstract class ClientPlayerEntityMixin {
+    @Inject(method = "dropItem", at = @At("HEAD"), cancellable = true)
+    private void darknessutils$preventDroppingLockedSelectedItem(LocalPlayer player, boolean dropAll, CallbackInfo ci) {
+        if (SlotLocking.isLocked(player.getInventory().getSelectedSlot())) {
+            ci.cancel();
+        }
     }
 }
