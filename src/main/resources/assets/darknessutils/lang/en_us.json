@@ -114,6 +114,6 @@
   "config.darknessutils.boss.parched_king": "Parched King",
   "config.darknessutils.boss.frost_stray": "Frost Stray",
   "key.categories.darknessutils.main": "DarknessUtils",
-  "message.darknessutils.config.cloth_config_required.title": "Cloth Config is required",
-  "message.darknessutils.config.cloth_config_required.message": "Install Cloth Config to use the DarknessUtils configuration screen."
+  "message.darknessutils.config.yacl_required.title": "YACL is required",
+  "message.darknessutils.config.yacl_required.message": "Install YetAnotherConfigLib (YACL) to use the DarknessUtils configuration screen."
 }
