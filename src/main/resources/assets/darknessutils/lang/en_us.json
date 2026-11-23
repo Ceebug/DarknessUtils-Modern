@@ -65,7 +65,7 @@
   "text.config.darkness-settings.option.modColors.secondary": "Secondary Color",
   "text.config.darkness-settings.option.modColors.tertiary": "Tertiary Color",
   "text.config.darkness-settings.option.modColors.quaternary": "Quaternary Color",
-  "key.fly": "Manual Fly",
+  "key.fly": "Toggle Fly",
   "key.category.darknessutils.main": "DarknessUtils",
   "config.darknessutils.title": "DarknessUtils Settings",
   "config.darknessutils.category.general": "General",
@@ -113,5 +113,6 @@
   "config.darknessutils.boss.frost_stray": "Frost Stray",
   "key.categories.darknessutils.main": "DarknessUtils",
   "message.darknessutils.config.yacl_required.title": "YACL is required",
-  "message.darknessutils.config.yacl_required.message": "Install YetAnotherConfigLib (YACL) to use the DarknessUtils configuration screen."
+  "message.darknessutils.config.yacl_required.message": "Install YetAnotherConfigLib (YACL) to use the DarknessUtils configuration screen.",
+  "config.darknessutils.option.manual_fix_all": "Fix all equipment with Manual Fix"
 }
