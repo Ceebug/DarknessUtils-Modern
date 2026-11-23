@@ -132,8 +132,8 @@ public class DarknessUtils implements ClientModInitializer {
 
     private static int openConfig(Minecraft client, FabricClientCommandSource source) {
         LinkedHashSet<String> missingMods = new LinkedHashSet<>();
-        if (!FabricLoader.getInstance().isModLoaded("cloth-config")) {
-            missingMods.add("Cloth Config");
+        if (!FabricLoader.getInstance().isModLoaded("yet_another_config_lib_v3")) {
+            missingMods.add("YetAnotherConfigLib (YACL)");
         }
 
         if (!missingMods.isEmpty()) {
