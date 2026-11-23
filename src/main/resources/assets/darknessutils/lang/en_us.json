@@ -109,5 +109,8 @@
   "message.darknessutils.config.missing_mod.one": "Could not open the config menu because the required mod is not installed: %s.",
   "message.darknessutils.config.missing_mod.many": "Could not open the config menu because the required mods are not installed: %s.",
   "message.darknessutils.config.open_failed": "Could not open the DarknessUtils config menu. See latest.log for details.",
-  "config.darknessutils.boss.cursed_skylord_gamertag": "Cursed Skylord_Gamertag"
+  "config.darknessutils.boss.cursed_skylord_gamertag": "Cursed Skylord_Gamertag",
+  "config.darknessutils.boss.tiny_terror": "Tiny Terror",
+  "config.darknessutils.boss.parched_king": "Parched King",
+  "config.darknessutils.boss.frost_stray": "Frost Stray"
 }
