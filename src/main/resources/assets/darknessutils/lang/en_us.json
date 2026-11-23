@@ -69,6 +69,7 @@
   "key.category.darknessutils.main": "DarknessUtils",
   "config.darknessutils.title": "DarknessUtils Settings",
   "config.darknessutils.category.general": "General",
+  "config.darknessutils.category.highlighting": "Highlighting",
   "config.darknessutils.category.automation": "Automation",
   "config.darknessutils.category.appearance": "Appearance",
   "config.darknessutils.option.slot_locking": "Enable slot locking",
