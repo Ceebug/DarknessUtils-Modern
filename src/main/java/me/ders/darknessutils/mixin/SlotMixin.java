@@ -39,4 +39,13 @@ public abstract class SlotMixin {
             cir.setReturnValue(false);
         }
     }
+
+    @Inject(method = "allowModification", at = @At("HEAD"), cancellable = true)
+    private void darknessutils$preventModifyingLockedSlot(Player player, CallbackInfoReturnable<Boolean> cir) {
+        if (container == player.getInventory()
+                && DarknessUtils.CONFIG.doSlotLocking()
+                && isLocked(index)) {
+            cir.setReturnValue(false);
+        }
+    }
 }
