@@ -12,6 +12,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
@@ -55,10 +56,9 @@ public class DarknessUtils implements ClientModInitializer {
         autoHeal = AutoHeal.getInstance();
         autoFly = AutoFly.getInstance();
 
-        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            SlotLocking.handleJoinWorld();
-            org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit();
-        });
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
+        ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register((client, world) ->
+                org.spongepowered.asm.mixin.MixinEnvironment.getCurrentEnvironment().audit());
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
             dispatcher.register(LiteralArgumentBuilder.<FabricClientCommandSource>literal("duconfig")
