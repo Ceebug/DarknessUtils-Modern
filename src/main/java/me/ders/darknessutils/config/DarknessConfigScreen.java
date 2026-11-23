@@ -119,7 +119,7 @@ public final class DarknessConfigScreen {
                                               Supplier<Integer> getter, Consumer<Integer> setter) {
         return Option.<Color>createBuilder()
                 .name(label(id))
-                .binding(new Color(defaultValue), () -> new Color(getter()), color -> setter.accept(color.getRGB() & 0xFFFFFF))
+                .binding(new Color(defaultValue), () -> new Color(getter.get()), color -> setter.accept(color.getRGB() & 0xFFFFFF))
                 .controller(option -> ColorControllerBuilder.create(option).allowAlpha(false))
                 .build();
     }
