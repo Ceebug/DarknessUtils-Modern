@@ -30,7 +30,7 @@ public abstract class HandledScreenMixin {
 
         Slot slot = ((HandledScreenAccessor) this).darknessutils$getHoveredSlot();
         if (slot != null && slot.container == client.player.getInventory()) {
-            SlotLocking.toggleSlot(slot.index);
+            SlotLocking.toggleSlot(slot.getContainerSlot());
             cir.setReturnValue(true);
         }
     }
@@ -41,7 +41,7 @@ public abstract class HandledScreenMixin {
         Minecraft client = Minecraft.getInstance();
         if (client.player == null || !DarknessUtils.CONFIG.doSlotLocking()) return;
         Inventory inventory = client.player.getInventory();
-        if (slot.container == inventory && SlotLocking.isLocked(slot.index)) {
+        if (slot.container == inventory && SlotLocking.isLocked(slot.getContainerSlot())) {
             graphics.fill(slot.x, slot.y, slot.x + 16, slot.y + 16, 0x88000000);
         }
     }
