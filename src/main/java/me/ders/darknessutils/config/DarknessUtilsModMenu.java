@@ -7,7 +7,6 @@ import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.ConfirmScreen;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 @Environment(EnvType.CLIENT)
@@ -19,7 +18,7 @@ public final class DarknessUtilsModMenu implements ModMenuApi {
         return parent -> {
             if (!FabricLoader.getInstance().isModLoaded("cloth-config")) {
                 return new ConfirmScreen(
-                        accepted -> Minecraft.getInstance().setScreen(parent),
+                        accepted -> Minecraft.getInstance().gui.setScreen(parent),
                         Component.translatable("message.darknessutils.config.cloth_config_required.title"),
                         Component.translatable("message.darknessutils.config.cloth_config_required.message")
                 );
