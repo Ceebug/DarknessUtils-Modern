@@ -49,7 +49,7 @@ public abstract class GlowingMixin {
         }
     }
 
-    @Inject(method = "getTeamColorValue", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getTeamColor", at = @At("HEAD"), cancellable = true)
     private void darknessutils$setNamedBossGlowColor(CallbackInfoReturnable<Integer> cir) {
         if (DarknessUtils.CONFIG.showBossHighlights() && hasCustomName()) {
             getBossOptions().ifPresent(option -> cir.setReturnValue(option.color()));
