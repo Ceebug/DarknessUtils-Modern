@@ -18,6 +18,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.Identifier;
 
 import java.nio.file.Files;
@@ -63,15 +64,9 @@ public class DarknessUtils implements ClientModInitializer {
                     "Registering DarknessUtils client commands");
 
             dispatcher.register(ClientCommands.literal("duconfig")
-                    .executes(context -> {
-                        context.getSource().sendFeedback(Component.literal("Opening DarknessUtils config..."));
-                        return openConfig(context.getSource().getClient());
-                    }));
+                    .executes(context -> openConfig(context.getSource().getClient(), context.getSource())));
             dispatcher.register(ClientCommands.literal("darknessutilsconfig")
-                    .executes(context -> {
-                        context.getSource().sendFeedback(Component.literal("Opening DarknessUtils config..."));
-                        return openConfig(context.getSource().getClient());
-                    }));
+                    .executes(context -> openConfig(context.getSource().getClient(), context.getSource())));
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -115,7 +110,25 @@ public class DarknessUtils implements ClientModInitializer {
         ));
     }
 
-    private static int openConfig(Minecraft client) {
+    private static int openConfig(Minecraft client, net.minecraft.commands.CommandSourceStack source) {
+        LinkedHashSet<String> missingMods = new LinkedHashSet<>();
+        if (!FabricLoader.getInstance().isModLoaded("cloth-config")) {
+            missingMods.add("Cloth Config");
+        }
+        if (!FabricLoader.getInstance().isModLoaded("modmenu")) {
+            missingMods.add("Mod Menu");
+        }
+
+        if (!missingMods.isEmpty()) {
+            String missingModNames = String.join(" and ", missingMods);
+            String translationKey = missingMods.size() == 1
+                    ? "message.darknessutils.config.missing_mod.one"
+                    : "message.darknessutils.config.missing_mod.many";
+            source.sendFailure(Component.translatable(translationKey, missingModNames)
+                    .withStyle(ChatFormatting.RED));
+            return 0;
+        }
+
         client.gui.setScreen(DarknessConfigScreen.create(client.gui.screen()));
         return 1;
     }
