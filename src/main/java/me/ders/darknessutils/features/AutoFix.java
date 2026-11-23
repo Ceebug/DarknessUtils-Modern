@@ -35,7 +35,7 @@ public class AutoFix {
             }
 
             if (needsFix) {
-                client.player.connection.sendCommand("fix");
+                client.player.connection.sendCommand("fix all");
                 lastAutomaticFixAt = System.currentTimeMillis();
             }
         });
