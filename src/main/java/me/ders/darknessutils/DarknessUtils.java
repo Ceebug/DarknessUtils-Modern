@@ -127,18 +127,17 @@ public class DarknessUtils implements ClientModInitializer {
             return 0;
         }
 
-        client.execute(() -> {
-            try {
-                client.gui.setScreen(DarknessConfigScreen.create(client.gui.screen()));
-                System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
-                        "Opened DarknessUtils configuration screen.");
-            } catch (Throwable exception) {
-                System.getLogger("DarknessUtils").log(System.Logger.Level.ERROR,
-                        "Failed to create or open the DarknessUtils configuration screen.", exception);
-                source.sendError(Component.translatable("message.darknessutils.config.open_failed")
-                        .withStyle(ChatFormatting.RED));
-            }
-        });
+        try {
+            client.setScreen(DarknessConfigScreen.create(client.screen));
+            System.getLogger("DarknessUtils").log(System.Logger.Level.INFO,
+                    "Opened DarknessUtils configuration screen.");
+        } catch (Throwable exception) {
+            System.getLogger("DarknessUtils").log(System.Logger.Level.ERROR,
+                    "Failed to create or open the DarknessUtils configuration screen.", exception);
+            source.sendError(Component.translatable("message.darknessutils.config.open_failed")
+                    .withStyle(ChatFormatting.RED));
+            return 0;
+        }
         return 1;
     }
 }
