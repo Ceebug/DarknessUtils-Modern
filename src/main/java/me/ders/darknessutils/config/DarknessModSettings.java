@@ -41,6 +41,9 @@ public class DarknessModSettings {
     public BossOptions.CursedSolphireOptions cursedSolphireOptions = new BossOptions.CursedSolphireOptions();
     public BossOptions.CursedFunMummyOptions cursedFunMummyOptions = new BossOptions.CursedFunMummyOptions();
     public BossOptions.CursedSkylordGamertagOptions cursedSkylordGamertagOptions = new BossOptions.CursedSkylordGamertagOptions();
+    public BossOptions.TinyTerrorOptions tinyTerrorOptions = new BossOptions.TinyTerrorOptions();
+    public BossOptions.ParchedKingOptions parchedKingOptions = new BossOptions.ParchedKingOptions();
+    public BossOptions.FrostStrayOptions frostStrayOptions = new BossOptions.FrostStrayOptions();
 
     public ModColors modColors = new ModColors();
 
