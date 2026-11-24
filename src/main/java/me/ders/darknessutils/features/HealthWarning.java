@@ -19,7 +19,7 @@ public final class HealthWarning {
             boolean healthBelowThreshold = DarknessUtils.CONFIG.healthWarningEnabled
                     && maxHealth > 0
                     && client.player.getHealth()
-                    < maxHealth * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0;
+                    <= maxHealth * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0;
 
             if (healthBelowThreshold && !warningConditionActive) {
                 client.player.sendSystemMessage(
