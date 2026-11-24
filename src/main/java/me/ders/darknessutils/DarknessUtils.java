@@ -2,9 +2,8 @@ package me.ders.darknessutils;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import me.ders.darknessutils.config.DarknessModSettings;
-import me.ders.darknessutils.features.AutoFix;
-import me.ders.darknessutils.features.AutoFly;
-import me.ders.darknessutils.features.AutoHeal;
+import me.ders.darknessutils.features.HealthWarning;
+import me.ders.darknessutils.features.LowDurabilityWarning;
 import me.ders.darknessutils.features.SlotLocking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
@@ -22,14 +21,12 @@ import java.util.LinkedHashSet;
 public class DarknessUtils implements ClientModInitializer {
     public static final DarknessModSettings CONFIG = DarknessModSettings.createAndLoad();
 
-    public static AutoFix autoFix;
-    public static AutoHeal autoHeal;
-    public static AutoFly autoFly;
+    public static LowDurabilityWarning lowDurabilityWarning;
+    public static HealthWarning healthWarning;
 
     public static KeyMapping lockBinding;
     public static KeyMapping fixBinding;
     public static KeyMapping healBinding;
-    public static KeyMapping flyBinding;
 
     public static boolean isSaveDirty = false;
     private long lastDirtyCheck = System.currentTimeMillis();
@@ -44,11 +41,9 @@ public class DarknessUtils implements ClientModInitializer {
         lockBinding = registerKey("key.slotlock", InputConstants.KEY_LALT);
         fixBinding = registerKey("key.fix", InputConstants.KEY_F);
         healBinding = registerKey("key.heal", InputConstants.KEY_H);
-        flyBinding = registerKey("key.fly", InputConstants.KEY_V);
 
-        autoFix = AutoFix.getInstance();
-        autoHeal = AutoHeal.getInstance();
-        autoFly = AutoFly.getInstance();
+        lowDurabilityWarning = LowDurabilityWarning.getInstance();
+        healthWarning = HealthWarning.getInstance();
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
         ClientLifecycleEvents.CLIENT_STARTED.register(client ->
@@ -93,5 +88,4 @@ public class DarknessUtils implements ClientModInitializer {
                 KEY_CATEGORY
         ));
     }
-
 }
