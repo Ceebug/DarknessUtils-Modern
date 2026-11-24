@@ -25,7 +25,7 @@ public final class HealthWarning {
 
             if (!DarknessUtils.CONFIG.healthWarningEnabled) return;
 
-            if (client.player.getHealth() <= DarknessUtils.CONFIG.healthWarningThreshold) {
+            if (client.player.getHealth() <= client.player.getMaxHealth() * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0) {
                 triggerHeal = true;
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.health_warning",
