@@ -2,22 +2,37 @@ package me.ders.darknessutils.features;
 
 import me.ders.darknessutils.DarknessUtils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.regex.Pattern;
+
 public final class LowDurabilityWarning {
+    private static final Pattern FIXED_MESSAGE = Pattern.compile("\\bfixed\\b", Pattern.CASE_INSENSITIVE);
+
     private static LowDurabilityWarning instance;
     private boolean durabilityWarningLatched;
+    private boolean awaitingFixConfirmation;
 
     private LowDurabilityWarning() {
+        ClientReceiveMessageEvents.GAME.register((message, overlay) -> {
+            if (awaitingFixConfirmation && FIXED_MESSAGE.matcher(message.getString()).find()) {
+                awaitingFixConfirmation = false;
+                durabilityWarningLatched = false;
+            }
+        });
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null || client.level == null) {
                 durabilityWarningLatched = false;
+                awaitingFixConfirmation = false;
                 return;
             }
 
             if (!DarknessUtils.CONFIG.lowDurabilityWarningEnabled) {
                 durabilityWarningLatched = false;
+                awaitingFixConfirmation = false;
                 return;
             }
 
@@ -39,12 +54,7 @@ public final class LowDurabilityWarning {
                 }
             }
 
-            if (!hasLowDurabilityItem) {
-                durabilityWarningLatched = false;
-                return;
-            }
-
-            if (!durabilityWarningLatched) {
+            if (hasLowDurabilityItem && !durabilityWarningLatched) {
                 durabilityWarningLatched = true;
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.low_durability_warning",
@@ -52,9 +62,8 @@ public final class LowDurabilityWarning {
                 WarningSound.play(client.player);
             }
 
-            // Keep this warning latched after the key is pressed. It rearms only
-            // once no inventory item is below the configured durability threshold.
-            if (DarknessUtils.fixBinding.consumeClick()) {
+            if (DarknessUtils.fixBinding.consumeClick() && !awaitingFixConfirmation) {
+                awaitingFixConfirmation = true;
                 client.player.connection.sendCommand("fix all");
             }
         });
