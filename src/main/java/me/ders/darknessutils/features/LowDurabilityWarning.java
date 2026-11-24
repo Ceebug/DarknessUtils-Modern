@@ -1,7 +1,6 @@
 package me.ders.darknessutils.features;
 
 import me.ders.darknessutils.DarknessUtils;
-import me.ders.darknessutils.features.WarningSound;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -39,6 +38,7 @@ public final class LowDurabilityWarning {
                     client.player.sendSystemMessage(
                             Component.translatable("message.darknessutils.low_durability_warning",
                                     Component.keybind("key.fix")));
+                    WarningSound.play(client.player);
                     break;
                 }
             }
