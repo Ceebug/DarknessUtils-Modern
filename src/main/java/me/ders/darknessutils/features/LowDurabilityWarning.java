@@ -35,9 +35,9 @@ public final class LowDurabilityWarning {
                         / stack.getMaxDamage() * 100.0;
                 if (remainingPercent <= DarknessUtils.CONFIG.lowDurabilityWarningThresholdPercent) {
                     triggerFix = true;
-                    client.gui.getChat().addMessage(
+                    client.gui.setOverlayMessage(
                             Component.translatable("message.darknessutils.low_durability_warning",
-                                    Component.keybind("key.fix")));
+                                    Component.keybind("key.fix")), false);
                     break;
                 }
             }
