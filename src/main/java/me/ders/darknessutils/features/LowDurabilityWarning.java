@@ -47,8 +47,8 @@ public final class LowDurabilityWarning {
                     confirmationTicks++;
                 }
 
-                // If the server does not reply, removing the item or repairing it
-                // locally still clears the warning after the three-tick grace period.
+                // Prefer the server confirmation, but allow removing the item or
+                // repairing it locally to rearm the warning after three ticks.
                 if ((confirmationReceived || confirmationTicks >= 3) && !hasLowDurabilityItem) {
                     resetState();
                 }
@@ -56,7 +56,7 @@ public final class LowDurabilityWarning {
                 durabilityWarningLatched = false;
             }
 
-            if (!durabilityWarningLatched) {
+            if (hasLowDurabilityItem && !durabilityWarningLatched) {
                 durabilityWarningLatched = true;
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.low_durability_warning",
