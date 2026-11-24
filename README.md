@@ -1,5 +1,7 @@
 # DarknessUtils Modern
 
-An updated Fork of [DersWasTaken's DarknessUtils mod](https://github.com/DersWasTaken/DarknessUtils) that targets modern minecraft (26.3+) with some patches, new features, and support for the new bosses.
-The keybinds will also now not toggle automatic stuff but manually run the command, toggles to automatic stuff will be in the settings.
-This project will be done with the help of some AI, but I will review the code in various prs.
+An updated fork of [DersWasTaken's DarknessUtils mod](https://github.com/DersWasTaken/DarknessUtils) targeting modern Minecraft (26.3+), with patches, quality-of-life features, and support for newer bosses.
+
+The mod includes configurable low-durability and health warnings. When a warning is triggered, its keybind lets you manually run the corresponding command; the mod does not automatically execute either command. The existing YACL configuration screen lets you enable each warning and adjust its threshold.
+
+This project is developed with help from AI, with the code reviewed throughout development.
