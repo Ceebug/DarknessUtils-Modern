@@ -7,17 +7,17 @@ import net.minecraft.world.item.ItemStack;
 
 public final class LowDurabilityWarning {
     private static LowDurabilityWarning instance;
-    private boolean warnedWhileLow;
+    private boolean durabilityWarningLatched;
 
     private LowDurabilityWarning() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null || client.level == null) {
-                warnedWhileLow = false;
+                durabilityWarningLatched = false;
                 return;
             }
 
             if (!DarknessUtils.CONFIG.lowDurabilityWarningEnabled) {
-                warnedWhileLow = false;
+                durabilityWarningLatched = false;
                 return;
             }
 
@@ -37,17 +37,19 @@ public final class LowDurabilityWarning {
             }
 
             if (!hasLowDurabilityItem) {
-                warnedWhileLow = false;
+                durabilityWarningLatched = false;
                 return;
             }
 
-            if (!warnedWhileLow) {
-                warnedWhileLow = true;
+            if (!durabilityWarningLatched) {
+                durabilityWarningLatched = true;
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.low_durability_warning",
                                 Component.keybind("key.fix")));
             }
 
+            // Keep this warning latched after the key is pressed. It rearms only
+            // once no inventory item is below the configured durability threshold.
             if (DarknessUtils.fixBinding.consumeClick()) {
                 client.player.connection.sendCommand("fix all");
             }
