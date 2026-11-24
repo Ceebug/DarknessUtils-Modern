@@ -37,8 +37,8 @@ public final class HealthWarning {
                     confirmationTicks++;
                 }
 
-                // A confirmation is preferred, but allow natural regeneration to
-                // rearm the warning if no response arrives within three ticks.
+                // Prefer the server confirmation, but allow natural regeneration
+                // to rearm the warning after three ticks without a response.
                 if ((confirmationReceived || confirmationTicks >= 3) && !healthIsLow) {
                     resetState();
                 }
@@ -46,7 +46,7 @@ public final class HealthWarning {
                 healthWarningLatched = false;
             }
 
-            if (!healthWarningLatched) {
+            if (healthIsLow && !healthWarningLatched) {
                 healthWarningLatched = true;
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.health_warning",
