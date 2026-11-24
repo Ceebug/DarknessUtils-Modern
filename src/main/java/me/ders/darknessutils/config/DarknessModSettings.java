@@ -42,8 +42,6 @@ public class DarknessModSettings {
     public BossOptions.ParchedKingOptions parchedKingOptions = new BossOptions.ParchedKingOptions();
     public BossOptions.FrostStrayOptions frostStrayOptions = new BossOptions.FrostStrayOptions();
 
-    public ModColors modColors = new ModColors();
-
     public static DarknessModSettings createAndLoad() {
         if (Files.notExists(CONFIG_PATH)) {
             DarknessModSettings defaults = new DarknessModSettings();
@@ -74,14 +72,4 @@ public class DarknessModSettings {
     public boolean playLockSounds() { return playLockSounds; }
     public boolean showBossHighlights() { return showBossHighlights; }
 
-    public static class ModColors {
-        public int primary = 0x8955F2;
-        public int secondary = 0xD68EF9;
-        public int tertiary = 0xC494F9;
-        public int quaternary = 0xD8C2FB;
-        public int primary() { return primary; }
-        public int secondary() { return secondary; }
-        public int tertiary() { return tertiary; }
-        public int quaternary() { return quaternary; }
-    }
 }
