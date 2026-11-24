@@ -6,30 +6,33 @@ import net.minecraft.network.chat.Component;
 
 public final class HealthWarning {
     private static HealthWarning instance;
-    private boolean triggerHeal;
+    private boolean warningConditionActive;
 
     private HealthWarning() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null || client.level == null) {
-                triggerHeal = false;
+                warningConditionActive = false;
                 return;
             }
 
-            if (triggerHeal) {
-                if (DarknessUtils.healBinding.consumeClick()) {
-                    client.player.connection.sendCommand("heal");
-                    triggerHeal = false;
-                }
-                return;
-            }
+            float maxHealth = client.player.getMaxHealth();
+            boolean healthBelowThreshold = DarknessUtils.CONFIG.healthWarningEnabled
+                    && maxHealth > 0
+                    && client.player.getHealth()
+                    < maxHealth * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0;
 
-            if (!DarknessUtils.CONFIG.healthWarningEnabled) return;
-
-            if (client.player.getHealth() <= client.player.getMaxHealth() * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0) {
-                triggerHeal = true;
+            if (healthBelowThreshold && !warningConditionActive) {
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.health_warning",
                                 Component.keybind("key.heal")));
+            }
+
+            // Re-evaluate every tick so the warning rearms when health recovers,
+            // or immediately when the warning is disabled.
+            warningConditionActive = healthBelowThreshold;
+
+            if (healthBelowThreshold && DarknessUtils.healBinding.consumeClick()) {
+                client.player.connection.sendCommand("heal");
             }
         });
     }
