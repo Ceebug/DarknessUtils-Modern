@@ -20,6 +20,8 @@ public class DarknessModSettings {
     public int lowDurabilityWarningThresholdPercent = 50;
     public boolean healthWarningEnabled = true;
     public int healthWarningThresholdPercent = 40;
+    public boolean warningSoundEnabled = true;
+    public String warningSound = "minecraft:block.amethyst_block.chime";
 
     public BossOptions.SkeletonKingOptions skeletonKingOptions = new BossOptions.SkeletonKingOptions();
     public BossOptions.ZombieKingOptions zombieKingOptions = new BossOptions.ZombieKingOptions();

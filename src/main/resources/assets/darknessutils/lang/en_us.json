@@ -103,5 +103,8 @@
   "message.darknessutils.health_warning": "Your health is low! Press %s to heal",
   "config.darknessutils.option.enable_warning": "Enable this warning",
   "config.darknessutils.warning.low_durability_warning": "Low Durability Warning",
-  "config.darknessutils.warning.health_warning": "Health Warning"
+  "config.darknessutils.warning.health_warning": "Health Warning",
+  "config.darknessutils.warning.warning_sound": "Warning Sound",
+  "config.darknessutils.option.warning_sound_enabled": "Play warning sounds",
+  "config.darknessutils.option.warning_sound": "Sound"
 }

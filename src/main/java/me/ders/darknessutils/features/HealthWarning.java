@@ -39,6 +39,7 @@ public final class HealthWarning {
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.health_warning",
                                 Component.keybind("key.heal")));
+                WarningSound.play(client.player);
             }
 
             // Keep this warning latched after the key is pressed. It rearms only

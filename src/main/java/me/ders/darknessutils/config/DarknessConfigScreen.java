@@ -5,6 +5,8 @@ import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
+import dev.isxander.yacl3.api.controller.DropdownStringControllerBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import me.ders.darknessutils.DarknessUtils;
@@ -42,6 +44,7 @@ public final class DarknessConfigScreen {
                 value -> config.healthWarningEnabled = value,
                 () -> config.healthWarningThresholdPercent,
                 value -> config.healthWarningThresholdPercent = value, 40));
+        warnings.group(warningSoundGroup(config));
         builder.category(warnings.build());
 
         ConfigCategory.Builder highlighting = ConfigCategory.createBuilder()
@@ -82,6 +85,25 @@ public final class DarknessConfigScreen {
         group.option(boolOption("enable_warning", true, enabledGetter, enabledSetter));
         group.option(sliderOption(id + "_threshold", defaultThreshold, 1, 100,
                 thresholdGetter, thresholdSetter));
+        return group.build();
+    }
+
+
+    private static OptionGroup warningSoundGroup(DarknessModSettings config) {
+        OptionGroup.Builder group = OptionGroup.createBuilder()
+                .name(Component.translatable("config.darknessutils.warning.warning_sound"));
+        group.option(boolOption("warning_sound_enabled", true,
+                () -> config.warningSoundEnabled, value -> config.warningSoundEnabled = value));
+        group.option(Option.<String>createBuilder()
+                .name(label("warning_sound"))
+                .binding("minecraft:block.amethyst_block.chime",
+                        () -> config.warningSound, value -> config.warningSound = value)
+                .controller(option -> DropdownStringControllerBuilder.create(option)
+                        .values(BuiltInRegistries.SOUND_EVENT.keySet().stream()
+                                .map(Object::toString).sorted().toList())
+                        .allowEmptyValue(false)
+                        .allowAnyValue(false))
+                .build());
         return group.build();
     }
 
