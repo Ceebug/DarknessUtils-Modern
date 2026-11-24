@@ -41,8 +41,8 @@ public final class DarknessConfigScreen {
                 value -> config.lowDurabilityWarningThresholdPercent = value));
         warnings.option(boolOption("health_warning", false,
                 () -> config.healthWarningEnabled, value -> config.healthWarningEnabled = value));
-        warnings.option(sliderOption("health_warning_threshold", 8, 1, 20,
-                () -> config.healthWarningThreshold, value -> config.healthWarningThreshold = value));
+        warnings.option(sliderOption("health_warning_threshold", 40, 1, 100,
+                () -> config.healthWarningThresholdPercent, value -> config.healthWarningThresholdPercent = value));
         builder.category(warnings.build());
 
         ConfigCategory.Builder highlighting = ConfigCategory.createBuilder()
