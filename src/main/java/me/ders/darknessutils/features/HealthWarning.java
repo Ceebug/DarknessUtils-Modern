@@ -1,6 +1,7 @@
 package me.ders.darknessutils.features;
 
 import me.ders.darknessutils.DarknessUtils;
+import me.ders.darknessutils.features.WarningSound;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 
@@ -30,6 +31,7 @@ public final class HealthWarning {
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.health_warning",
                                 Component.keybind("key.heal")));
+                WarningSound.play(client.player);
             }
         });
     }
