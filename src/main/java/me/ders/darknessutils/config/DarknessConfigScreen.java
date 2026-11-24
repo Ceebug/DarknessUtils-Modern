@@ -71,17 +71,6 @@ public final class DarknessConfigScreen {
         highlighting.group(bossGroup("frost_stray", config.frostStrayOptions));
         builder.category(highlighting.build());
 
-        ConfigCategory.Builder appearance = ConfigCategory.createBuilder()
-                .name(Component.translatable("config.darknessutils.category.appearance"));
-        appearance.option(colorOption("primary_color", 0x8955F2,
-                () -> config.modColors.primary, value -> config.modColors.primary = value));
-        appearance.option(colorOption("secondary_color", 0xD68EF9,
-                () -> config.modColors.secondary, value -> config.modColors.secondary = value));
-        appearance.option(colorOption("tertiary_color", 0xC494F9,
-                () -> config.modColors.tertiary, value -> config.modColors.tertiary = value));
-        appearance.option(colorOption("quaternary_color", 0xD8C2FB,
-                () -> config.modColors.quaternary, value -> config.modColors.quaternary = value));
-        builder.category(appearance.build());
 
         return builder.build().generateScreen(parent);
     }
