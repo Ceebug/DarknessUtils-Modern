@@ -30,27 +30,20 @@ public final class DarknessConfigScreen {
                 config::doSlotLocking, value -> config.doSlotLocking = value));
         general.option(boolOption("lock_sounds", config.playLockSounds,
                 config::playLockSounds, value -> config.playLockSounds = value));
-        general.option(boolOption("manual_fix_all", config.manualFixAll,
-                () -> config.manualFixAll, value -> config.manualFixAll = value));
         builder.category(general.build());
 
-        ConfigCategory.Builder automation = ConfigCategory.createBuilder()
-                .name(Component.translatable("config.darknessutils.category.automation"));
-        automation.option(boolOption("auto_fix", false,
-                () -> config.autoFixEnabled, value -> config.autoFixEnabled = value));
-        automation.option(sliderOption("auto_fix_threshold", 50, 1, 100,
-                () -> config.autoFixThresholdPercent, value -> config.autoFixThresholdPercent = value));
-        automation.option(sliderOption("auto_fix_cooldown", 3, 1, 60,
-                () -> config.autoFixCooldownSeconds, value -> config.autoFixCooldownSeconds = value));
-        automation.option(boolOption("auto_heal", false,
-                () -> config.autoHealEnabled, value -> config.autoHealEnabled = value));
-        automation.option(sliderOption("auto_heal_threshold", 8, 1, 20,
-                () -> config.autoHealThreshold, value -> config.autoHealThreshold = value));
-        automation.option(sliderOption("auto_heal_cooldown", 3, 1, 60,
-                () -> config.autoHealCooldownSeconds, value -> config.autoHealCooldownSeconds = value));
-        automation.option(boolOption("auto_fly", false,
-                () -> config.autoFlyEnabled, value -> config.autoFlyEnabled = value));
-        builder.category(automation.build());
+        ConfigCategory.Builder warnings = ConfigCategory.createBuilder()
+                .name(Component.translatable("config.darknessutils.category.warnings"));
+        warnings.option(boolOption("low_durability_warning", false,
+                () -> config.lowDurabilityWarningEnabled, value -> config.lowDurabilityWarningEnabled = value));
+        warnings.option(sliderOption("low_durability_warning_threshold", 50, 1, 100,
+                () -> config.lowDurabilityWarningThresholdPercent,
+                value -> config.lowDurabilityWarningThresholdPercent = value));
+        warnings.option(boolOption("health_warning", false,
+                () -> config.healthWarningEnabled, value -> config.healthWarningEnabled = value));
+        warnings.option(sliderOption("health_warning_threshold", 8, 1, 20,
+                () -> config.healthWarningThreshold, value -> config.healthWarningThreshold = value));
+        builder.category(warnings.build());
 
         ConfigCategory.Builder highlighting = ConfigCategory.createBuilder()
                 .name(Component.translatable("config.darknessutils.category.highlighting"));
