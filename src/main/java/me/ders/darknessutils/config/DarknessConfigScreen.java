@@ -5,6 +5,8 @@ import dev.isxander.yacl3.api.Option;
 import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.ColorControllerBuilder;
+import dev.isxander.yacl3.api.controller.DropdownStringControllerBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
 import me.ders.darknessutils.DarknessUtils;
@@ -43,6 +45,7 @@ public final class DarknessConfigScreen {
                 () -> config.healthWarningEnabled, value -> config.healthWarningEnabled = value));
         warnings.option(sliderOption("health_warning_threshold", 40, 1, 100,
                 () -> config.healthWarningThresholdPercent, value -> config.healthWarningThresholdPercent = value));
+        warnings.group(warningSoundGroup(config));
         builder.category(warnings.build());
 
         ConfigCategory.Builder highlighting = ConfigCategory.createBuilder()
@@ -73,6 +76,24 @@ public final class DarknessConfigScreen {
 
 
         return builder.build().generateScreen(parent);
+    }
+
+    private static OptionGroup warningSoundGroup(DarknessModSettings config) {
+        OptionGroup.Builder group = OptionGroup.createBuilder()
+                .name(Component.translatable("config.darknessutils.warning.warning_sound"));
+        group.option(boolOption("warning_sound_enabled", true,
+                () -> config.warningSoundEnabled, value -> config.warningSoundEnabled = value));
+        group.option(Option.<String>createBuilder()
+                .name(label("warning_sound"))
+                .binding("minecraft:block.amethyst_block.chime",
+                        () -> config.warningSound, value -> config.warningSound = value)
+                .controller(option -> DropdownStringControllerBuilder.create(option)
+                        .values(BuiltInRegistries.SOUND_EVENT.keySet().stream()
+                                .map(Object::toString).sorted().toList())
+                        .allowEmptyValue(false)
+                        .allowAnyValue(false))
+                .build());
+        return group.build();
     }
 
     private static OptionGroup bossGroup(String id, BossOptions.Entry options) {
