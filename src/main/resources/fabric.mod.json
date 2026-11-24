@@ -3,7 +3,7 @@
   "id": "darknessutils",
   "version": "${version}",
   "name": "DarknessUtils Modern",
-  "description": "Client-side quality-of-life utilities for Minecraft, including automation, slot locking, boss highlighting, and an in-game configuration screen.",
+  "description": "Client-side quality-of-life utilities for Minecraft, including configurable warnings, slot locking, boss highlighting, and an in-game configuration screen.",
   "authors": [
     "Ceebug"
   ],
