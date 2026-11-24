@@ -61,7 +61,7 @@
   "text.config.darkness-settings.option.cursedFunMummyOptions.isEnabled": "Mob Highlight",
   "key.category.darknessutils.main": "DarknessUtils",
   "config.darknessutils.title": "DarknessUtils Settings",
-  "config.darknessutils.category.general": "General",
+  "config.darknessutils.category.general": "Slot locking",
   "config.darknessutils.category.highlighting": "Highlighting",
   "config.darknessutils.category.warnings": "Warnings",
   "config.darknessutils.option.slot_locking": "Enable slot locking",
