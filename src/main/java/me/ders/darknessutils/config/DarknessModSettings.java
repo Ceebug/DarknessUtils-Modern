@@ -19,7 +19,7 @@ public class DarknessModSettings {
     public boolean lowDurabilityWarningEnabled = false;
     public int lowDurabilityWarningThresholdPercent = 50;
     public boolean healthWarningEnabled = false;
-    public int healthWarningThreshold = 8;
+    public int healthWarningThresholdPercent = 40;
 
     public BossOptions.SkeletonKingOptions skeletonKingOptions = new BossOptions.SkeletonKingOptions();
     public BossOptions.ZombieKingOptions zombieKingOptions = new BossOptions.ZombieKingOptions();
