@@ -9,6 +9,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
@@ -17,6 +18,8 @@ import net.minecraft.resources.Identifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class DarknessUtils implements ClientModInitializer {
     public static final DarknessModSettings CONFIG = DarknessModSettings.createAndLoad();
@@ -32,6 +35,9 @@ public class DarknessUtils implements ClientModInitializer {
     private long lastDirtyCheck = System.currentTimeMillis();
     public static LinkedHashSet<Integer> lockedSlots = new LinkedHashSet<>();
 
+    private static final Pattern FIXED_MESSAGE = Pattern.compile("\\bfixed\\b", Pattern.CASE_INSENSITIVE);
+    private static final Pattern HEALED_MESSAGE = Pattern.compile("\\bhealed\\b", Pattern.CASE_INSENSITIVE);
+
     private static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(
             Identifier.fromNamespaceAndPath("darknessutils", "main")
     );
@@ -44,6 +50,16 @@ public class DarknessUtils implements ClientModInitializer {
 
         lowDurabilityWarning = LowDurabilityWarning.getInstance();
         healthWarning = HealthWarning.getInstance();
+
+        ClientReceiveMessageEvents.GAME.register((message, overlay) -> {
+            String received = message.getString().toLowerCase(Locale.ROOT);
+            if (FIXED_MESSAGE.matcher(received).find()) {
+                lowDurabilityWarning.onFixedMessage();
+            }
+            if (HEALED_MESSAGE.matcher(received).find()) {
+                healthWarning.onHealedMessage();
+            }
+        });
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> SlotLocking.handleJoinWorld());
         ClientLifecycleEvents.CLIENT_STARTED.register(client ->
