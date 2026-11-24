@@ -77,7 +77,7 @@
   "config.darknessutils.option.low_durability_warning": "Low Durability Warning",
   "config.darknessutils.option.low_durability_warning_threshold": "Warn when remaining durability is at or below (%)",
   "config.darknessutils.option.health_warning": "Health Warning",
-  "config.darknessutils.option.health_warning_threshold": "Warn when health is at or below (health points)",
+  "config.darknessutils.option.health_warning_threshold": "Warn when health is at or below (%)",
   "config.darknessutils.option.highlight_enabled": "Highlight this boss",
   "config.darknessutils.option.highlight_color": "Highlight color",
   "config.darknessutils.option.primary_color": "Primary color",
