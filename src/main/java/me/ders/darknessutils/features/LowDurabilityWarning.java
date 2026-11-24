@@ -23,14 +23,17 @@ public final class LowDurabilityWarning {
 
             var inventory = client.player.getInventory();
             boolean hasLowDurabilityItem = false;
+            int threshold = DarknessUtils.CONFIG.lowDurabilityWarningThresholdPercent;
 
             for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
                 ItemStack stack = inventory.getItem(slot);
-                if (stack.isEmpty() || stack.getMaxDamage() <= 0) continue;
+                // Ignore empty, non-damageable, and completely undamaged items.
+                if (stack.isEmpty() || stack.getMaxDamage() <= 0 || stack.getDamageValue() <= 0) continue;
 
                 double remainingPercent = (double) (stack.getMaxDamage() - stack.getDamageValue())
                         / stack.getMaxDamage() * 100.0;
-                if (remainingPercent <= DarknessUtils.CONFIG.lowDurabilityWarningThresholdPercent) {
+                // Strictly below: an item exactly at the threshold does not trigger.
+                if (remainingPercent < threshold) {
                     hasLowDurabilityItem = true;
                     break;
                 }
@@ -46,6 +49,7 @@ public final class LowDurabilityWarning {
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.low_durability_warning",
                                 Component.keybind("key.fix")));
+                WarningSound.play(client.player);
             }
 
             // Keep this warning latched after the key is pressed. It rearms only
