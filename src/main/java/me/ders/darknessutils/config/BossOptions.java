@@ -22,12 +22,12 @@ public final class BossOptions {
     public static class WitchQueenOptions extends Entry { public WitchQueenOptions() { super(0x674EA7); } }
     public static class DragonKingOptions extends Entry { public DragonKingOptions() { super(0x1B0F29); } }
     public static class SuperWardenOptions extends Entry { public SuperWardenOptions() { super(0x0B5394); } }
-    public static class CursedAFOptions extends Entry { public CursedAFOptions() { super(0xFF8C00); } }
-    public static class CursedZEDDY1977Options extends Entry { public CursedZEDDY1977Options() { super(0x8B0000); } }
-    public static class CursedCrankles_Options extends Entry { public CursedCrankles_Options() { super(0x8B5A2B); } }
-    public static class CursedSolphireOptions extends Entry { public CursedSolphireOptions() { super(0xE879A8); } }
-    public static class CursedFunMummyOptions extends Entry { public CursedFunMummyOptions() { super(0x8A2BE2); } }
-    public static class CursedSkylordGamertagOptions extends Entry { public CursedSkylordGamertagOptions() { super(0x36BFCB); } }
+    public static class CursedAFOptions extends Entry { public CursedAFOptions() { super(0xFF0000); } }
+    public static class CursedZEDDY1977Options extends Entry { public CursedZEDDY1977Options() { super(0xFF0000); } }
+    public static class CursedCrankles_Options extends Entry { public CursedCrankles_Options() { super(0xFF0000); } }
+    public static class CursedSolphireOptions extends Entry { public CursedSolphireOptions() { super(0xFF0000); } }
+    public static class CursedFunMummyOptions extends Entry { public CursedFunMummyOptions() { super(0xFF0000); } }
+    public static class CursedSkylordGamertagOptions extends Entry { public CursedSkylordGamertagOptions() { super(0xFF0000); } }
     public static class TinyTerrorOptions extends Entry { public TinyTerrorOptions() { super(0x3FA34D); } }
     public static class ParchedKingOptions extends Entry { public ParchedKingOptions() { super(0xB5A17A); } }
     public static class FrostStrayOptions extends Entry { public FrostStrayOptions() { super(0x8EDCF2); } }

@@ -39,7 +39,7 @@ public class DarknessUtils implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         lockBinding = registerKey("key.slotlock", InputConstants.KEY_LALT);
-        fixBinding = registerKey("key.fix", InputConstants.KEY_F);
+        fixBinding = registerKey("key.fix", InputConstants.KEY_G);
         healBinding = registerKey("key.heal", InputConstants.KEY_H);
 
         lowDurabilityWarning = LowDurabilityWarning.getInstance();

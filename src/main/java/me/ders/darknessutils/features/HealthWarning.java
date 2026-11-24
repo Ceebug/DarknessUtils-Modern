@@ -6,30 +6,45 @@ import net.minecraft.network.chat.Component;
 
 public final class HealthWarning {
     private static HealthWarning instance;
-    private boolean triggerHeal;
+    private boolean healthWarningLatched;
 
     private HealthWarning() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null || client.level == null) {
-                triggerHeal = false;
+                healthWarningLatched = false;
                 return;
             }
 
-            if (triggerHeal) {
-                if (DarknessUtils.healBinding.consumeClick()) {
-                    client.player.connection.sendCommand("heal");
-                    triggerHeal = false;
-                }
+            if (!DarknessUtils.CONFIG.healthWarningEnabled) {
+                healthWarningLatched = false;
                 return;
             }
 
-            if (!DarknessUtils.CONFIG.healthWarningEnabled) return;
+            float maxHealth = client.player.getMaxHealth();
+            if (maxHealth <= 0) {
+                healthWarningLatched = false;
+                return;
+            }
 
-            if (client.player.getHealth() <= client.player.getMaxHealth() * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0) {
-                triggerHeal = true;
+            boolean healthIsLow = client.player.getHealth()
+                    <= maxHealth * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0;
+
+            if (!healthIsLow) {
+                healthWarningLatched = false;
+                return;
+            }
+
+            if (!healthWarningLatched) {
+                healthWarningLatched = true;
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.health_warning",
                                 Component.keybind("key.heal")));
+            }
+
+            // Keep this warning latched after the key is pressed. It rearms only
+            // once health rises above the configured threshold.
+            if (DarknessUtils.healBinding.consumeClick()) {
+                client.player.connection.sendCommand("heal");
             }
         });
     }
