@@ -1,6 +1,7 @@
 package me.ders.darknessutils.features;
 
 import me.ders.darknessutils.DarknessUtils;
+import me.ders.darknessutils.features.WarningSound;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
