@@ -14,15 +14,20 @@ public final class WarningSound {
             return;
         }
 
+        String configuredSound = DarknessUtils.CONFIG.warningSound;
+        if (configuredSound == null || configuredSound.isBlank()) {
+            return;
+        }
+
         try {
-            Identifier soundId = Identifier.parse(DarknessUtils.CONFIG.warningSound);
+            Identifier soundId = Identifier.parse(configuredSound);
             SoundEvent sound = BuiltInRegistries.SOUND_EVENT.getValue(soundId);
             if (sound != null) {
                 player.playSound(sound, 1.0F, 1.0F);
             }
         } catch (IllegalArgumentException exception) {
             System.getLogger("DarknessUtils").log(System.Logger.Level.WARNING,
-                    "Invalid warning sound ID: " + DarknessUtils.CONFIG.warningSound, exception);
+                    "Invalid warning sound ID: " + configuredSound, exception);
         }
     }
 }

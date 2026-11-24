@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 @Mixin(Entity.class)
@@ -61,9 +62,9 @@ public abstract class GlowingMixin {
     }
 
     private Optional<BossOptions.Entry> getBossOptions() {
-        String name = getCustomName().getString().toLowerCase();
+        String name = getCustomName().getString().toLowerCase(Locale.ROOT);
         return DARKNESSUTILS_BOSS_COLORS.entrySet().stream()
-                .filter(entry -> name.contains(entry.getKey().toLowerCase()))
+                .filter(entry -> name.contains(entry.getKey().toLowerCase(Locale.ROOT)))
                 .map(entry -> entry.getValue().get())
                 .findFirst();
     }

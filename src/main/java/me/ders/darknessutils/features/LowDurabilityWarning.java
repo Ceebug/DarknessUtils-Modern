@@ -8,16 +8,19 @@ import net.minecraft.world.item.ItemStack;
 public final class LowDurabilityWarning {
     private static LowDurabilityWarning instance;
     private boolean durabilityWarningLatched;
+    private boolean waitingForConfirmation;
+    private boolean confirmationReceived;
+    private int confirmationTicks;
 
     private LowDurabilityWarning() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player == null || client.level == null) {
-                durabilityWarningLatched = false;
+                resetState();
                 return;
             }
 
             if (!DarknessUtils.CONFIG.lowDurabilityWarningEnabled) {
-                durabilityWarningLatched = false;
+                resetState();
                 return;
             }
 
@@ -39,12 +42,21 @@ public final class LowDurabilityWarning {
                 }
             }
 
-            if (!hasLowDurabilityItem) {
+            if (waitingForConfirmation) {
+                if (!confirmationReceived) {
+                    confirmationTicks++;
+                }
+
+                // Prefer the server confirmation, but allow removing the item or
+                // repairing it locally to rearm the warning after three ticks.
+                if ((confirmationReceived || confirmationTicks >= 3) && !hasLowDurabilityItem) {
+                    resetState();
+                }
+            } else if (!hasLowDurabilityItem) {
                 durabilityWarningLatched = false;
-                return;
             }
 
-            if (!durabilityWarningLatched) {
+            if (hasLowDurabilityItem && !durabilityWarningLatched) {
                 durabilityWarningLatched = true;
                 client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.low_durability_warning",
@@ -52,12 +64,26 @@ public final class LowDurabilityWarning {
                 WarningSound.play(client.player);
             }
 
-            // Keep this warning latched after the key is pressed. It rearms only
-            // once no inventory item is below the configured durability threshold.
             if (DarknessUtils.fixBinding.consumeClick()) {
+                waitingForConfirmation = true;
+                confirmationReceived = false;
+                confirmationTicks = 0;
                 client.player.connection.sendCommand("fix all");
             }
         });
+    }
+
+    public void onFixedMessage() {
+        if (waitingForConfirmation) {
+            confirmationReceived = true;
+        }
+    }
+
+    private void resetState() {
+        durabilityWarningLatched = false;
+        waitingForConfirmation = false;
+        confirmationReceived = false;
+        confirmationTicks = 0;
     }
 
     public static LowDurabilityWarning getInstance() {
