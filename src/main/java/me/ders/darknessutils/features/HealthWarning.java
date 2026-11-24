@@ -27,9 +27,9 @@ public final class HealthWarning {
 
             if (client.player.getHealth() <= DarknessUtils.CONFIG.healthWarningThreshold) {
                 triggerHeal = true;
-                client.gui.setOverlayMessage(
+                client.player.sendSystemMessage(
                         Component.translatable("message.darknessutils.health_warning",
-                                Component.keybind("key.heal")), false);
+                                Component.keybind("key.heal")));
             }
         });
     }
