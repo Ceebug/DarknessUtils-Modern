@@ -14,16 +14,12 @@ public class DarknessModSettings {
 
     public boolean doSlotLocking = true;
     public boolean playLockSounds = true;
-    public boolean manualFixAll = true;
     public boolean showBossHighlights = true;
 
-    public boolean autoFixEnabled = false;
-    public int autoFixThresholdPercent = 50;
-    public int autoFixCooldownSeconds = 3;
-    public boolean autoHealEnabled = false;
-    public int autoHealThreshold = 8;
-    public int autoHealCooldownSeconds = 3;
-    public boolean autoFlyEnabled = false;
+    public boolean lowDurabilityWarningEnabled = false;
+    public int lowDurabilityWarningThresholdPercent = 50;
+    public boolean healthWarningEnabled = false;
+    public int healthWarningThresholdPercent = 40;
 
     public BossOptions.SkeletonKingOptions skeletonKingOptions = new BossOptions.SkeletonKingOptions();
     public BossOptions.ZombieKingOptions zombieKingOptions = new BossOptions.ZombieKingOptions();
