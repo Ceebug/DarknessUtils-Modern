@@ -34,11 +34,11 @@ public final class DarknessConfigScreen {
 
         ConfigCategory.Builder warnings = ConfigCategory.createBuilder()
                 .name(Component.translatable("config.darknessutils.category.warnings"));
-        warnings.group(warningGroup("low_durability_warning", config.lowDurabilityWarningEnabled,
+        warnings.group(warningGroup("low_durability_warning", () -> config.lowDurabilityWarningEnabled,
                 value -> config.lowDurabilityWarningEnabled = value,
                 () -> config.lowDurabilityWarningThresholdPercent,
                 value -> config.lowDurabilityWarningThresholdPercent = value, 50));
-        warnings.group(warningGroup("health_warning", config.healthWarningEnabled,
+        warnings.group(warningGroup("health_warning", () -> config.healthWarningEnabled,
                 value -> config.healthWarningEnabled = value,
                 () -> config.healthWarningThresholdPercent,
                 value -> config.healthWarningThresholdPercent = value, 40));
@@ -74,12 +74,12 @@ public final class DarknessConfigScreen {
         return builder.build().generateScreen(parent);
     }
 
-    private static OptionGroup warningGroup(String id, boolean enabled, Consumer<Boolean> enabledSetter,
+    private static OptionGroup warningGroup(String id, Supplier<Boolean> enabledGetter, Consumer<Boolean> enabledSetter,
                                              Supplier<Integer> thresholdGetter, Consumer<Integer> thresholdSetter,
                                              int defaultThreshold) {
         OptionGroup.Builder group = OptionGroup.createBuilder()
                 .name(Component.translatable("config.darknessutils.warning." + id));
-        group.option(boolOption("enable_warning", true, () -> enabled, enabledSetter));
+        group.option(boolOption("enable_warning", true, enabledGetter, enabledSetter));
         group.option(sliderOption(id + "_threshold", defaultThreshold, 1, 100,
                 thresholdGetter, thresholdSetter));
         return group.build();
