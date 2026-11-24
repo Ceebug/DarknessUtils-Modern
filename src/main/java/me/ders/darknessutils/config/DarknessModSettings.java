@@ -16,9 +16,9 @@ public class DarknessModSettings {
     public boolean playLockSounds = true;
     public boolean showBossHighlights = true;
 
-    public boolean lowDurabilityWarningEnabled = false;
+    public boolean lowDurabilityWarningEnabled = true;
     public int lowDurabilityWarningThresholdPercent = 50;
-    public boolean healthWarningEnabled = false;
+    public boolean healthWarningEnabled = true;
     public int healthWarningThresholdPercent = 40;
 
     public BossOptions.SkeletonKingOptions skeletonKingOptions = new BossOptions.SkeletonKingOptions();

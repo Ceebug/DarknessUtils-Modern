@@ -34,12 +34,12 @@ public final class DarknessConfigScreen {
 
         ConfigCategory.Builder warnings = ConfigCategory.createBuilder()
                 .name(Component.translatable("config.darknessutils.category.warnings"));
-        warnings.option(boolOption("low_durability_warning", false,
+        warnings.option(boolOption("low_durability_warning", true,
                 () -> config.lowDurabilityWarningEnabled, value -> config.lowDurabilityWarningEnabled = value));
         warnings.option(sliderOption("low_durability_warning_threshold", 50, 1, 100,
                 () -> config.lowDurabilityWarningThresholdPercent,
                 value -> config.lowDurabilityWarningThresholdPercent = value));
-        warnings.option(boolOption("health_warning", false,
+        warnings.option(boolOption("health_warning", true,
                 () -> config.healthWarningEnabled, value -> config.healthWarningEnabled = value));
         warnings.option(sliderOption("health_warning_threshold", 40, 1, 100,
                 () -> config.healthWarningThresholdPercent, value -> config.healthWarningThresholdPercent = value));
