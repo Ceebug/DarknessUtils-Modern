@@ -99,7 +99,7 @@ public class DarknessUtils implements ClientModInitializer {
     private static KeyMapping registerKey(String translationKey, int defaultKey) {
         return KeyMappingHelper.registerKeyMapping(new KeyMapping(
                 translationKey,
-                InputConstants.Type.KEYBOARD,
+                InputConstants.Type.KEYSYM,
                 defaultKey,
                 KEY_CATEGORY
         ));
