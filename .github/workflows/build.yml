@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - port-26.2-build
+      - port-26.3-build
   pull_request:
   workflow_dispatch:
 
@@ -33,7 +33,7 @@ jobs:
       - name: Upload mod JAR
         uses: actions/upload-artifact@v4
         with:
-          name: DarknessUtils-MC26.2
+          name: DarknessUtils-MC26.3
           path: |
             build/libs/*.jar
             !build/libs/*-sources.jar
