@@ -30,7 +30,7 @@ public final class HealthWarning {
             }
 
             boolean healthIsLow = client.player.getHealth()
-                    <= maxHealth * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0;
+                    < maxHealth * DarknessUtils.CONFIG.healthWarningThresholdPercent / 100.0;
 
             if (waitingForConfirmation) {
                 if (!confirmationReceived) {
